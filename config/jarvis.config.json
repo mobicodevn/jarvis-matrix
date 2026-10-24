@@ -1,0 +1,11 @@
+{
+  "plugins_root": "/Users/kietnguyen/.gemini/config/github-plugins/develop",
+  "detected_ides": [
+    "antigravity",
+    "cursor",
+    "claude-code",
+    "codex"
+  ],
+  "setup_completed": true,
+  "setup_date": "2026-10-24T13:42:55Z"
+}

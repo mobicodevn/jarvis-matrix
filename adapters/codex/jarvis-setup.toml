@@ -1,0 +1,9 @@
+[command]
+name = "jarvis-setup"
+description = ""
+canonical_skill = "skills/jarvis-setup/SKILL.md"
+
+[invocation]
+# Invoke by reading the canonical SKILL.md instructions
+# Path: ~/.gemini/config/plugins/jarvis-matrix/skills/jarvis-setup/SKILL.md
+method = "skill-delegation"

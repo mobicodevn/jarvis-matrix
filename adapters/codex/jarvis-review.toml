@@ -1,0 +1,9 @@
+[command]
+name = "jarvis-review"
+description = ""
+canonical_skill = "skills/jarvis-review/SKILL.md"
+
+[invocation]
+# Invoke by reading the canonical SKILL.md instructions
+# Path: ~/.gemini/config/plugins/jarvis-matrix/skills/jarvis-review/SKILL.md
+method = "skill-delegation"

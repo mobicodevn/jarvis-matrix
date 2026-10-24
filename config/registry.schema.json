@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Jarvis-Matrix Registry",
+  "description": "Schema for the auto-generated skill/agent registry used by the Jarvis router.",
+  "type": "object",
+  "required": ["version", "plugins_root", "last_indexed", "plugins"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "description": "Registry schema version"
+    },
+    "plugins_root": {
+      "type": "string",
+      "description": "Absolute path to the github-plugins directory"
+    },
+    "last_indexed": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of last registry build"
+    },
+    "plugins": {
+      "type": "object",
+      "description": "Map of plugin-id to plugin metadata",
+      "additionalProperties": {
+        "$ref": "#/definitions/Plugin"
+      }
+    }
+  },
+  "definitions": {
+    "Plugin": {
+      "type": "object",
+      "required": ["path", "type"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Relative path from plugins_root to this plugin directory"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["plugin", "monorepo", "python-library", "skill-only"],
+          "description": "Plugin structural type"
+        },
+        "version": {
+          "type": "string",
+          "description": "Plugin version from plugin.json if available"
+        },
+        "skills": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/SkillEntry" }
+        },
+        "agents": {
+          "type": "array",
+          "items": { "type": "string", "description": "Relative path to agent .md file" }
+        },
+        "entry_points": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "CLI entry points (for python-library type)"
+        },
+        "levels": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Named modes or levels (e.g. ponytail lite/full/ultra)"
+        },
+        "modes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Named compression modes (e.g. caveman/ultracave/megacave)"
+        },
+        "output": { "$ref": "#/definitions/OutputSpec" },
+        "invocation": {
+          "type": "string",
+          "description": "How to invoke this plugin (e.g. embedded-mode)"
+        }
+      }
+    },
+    "SkillEntry": {
+      "type": "object",
+      "required": ["name", "path"],
+      "properties": {
+        "name": { "type": "string" },
+        "path": { "type": "string", "description": "Relative path from plugins_root to SKILL.md" }
+      }
+    },
+    "OutputSpec": {
+      "type": "object",
+      "properties": {
+        "dir": { "type": "string", "description": "Output directory relative to project root" },
+        "format": { "type": "string", "description": "Primary output file name or format" }
+      }
+    }
+  }
+}

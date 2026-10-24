@@ -1,0 +1,16 @@
+---
+description: 
+globs: []
+alwaysApply: false
+---
+
+# jarvis-plan
+
+This rule delegates to the canonical Jarvis-Matrix skill definition.
+
+**Canonical source:** `skills/jarvis-plan/SKILL.md`
+
+To invoke, use: `/jarvis-plan` in your chat.
+
+Follow all instructions in the canonical SKILL.md located at:
+`~/.gemini/config/plugins/jarvis-matrix/skills/jarvis-plan/SKILL.md`

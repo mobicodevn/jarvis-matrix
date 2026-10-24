@@ -1,0 +1,354 @@
+{
+    "version": 1,
+    "plugins_root": "/Users/kietnguyen/.gemini/config/github-plugins/develop",
+    "last_indexed": "2026-10-24T13:42:18Z",
+    "plugins": {
+        "understand-anything": {
+            "path": "Understand-Anything",
+            "type": "monorepo",
+            "version": "2.9.7",
+            "skills": [
+                {
+                    "name": "understand",
+                    "path": "Understand-Anything/understand-anything-plugin/skills/understand/SKILL.md"
+                },
+                {
+                    "name": "understand-chat",
+                    "path": "Understand-Anything/understand-anything-plugin/skills/understand-chat/SKILL.md"
+                },
+                {
+                    "name": "understand-dashboard",
+                    "path": "Understand-Anything/understand-anything-plugin/skills/understand-dashboard/SKILL.md"
+                },
+                {
+                    "name": "understand-diff",
+                    "path": "Understand-Anything/understand-anything-plugin/skills/understand-diff/SKILL.md"
+                },
+                {
+                    "name": "understand-domain",
+                    "path": "Understand-Anything/understand-anything-plugin/skills/understand-domain/SKILL.md"
+                },
+                {
+                    "name": "understand-explain",
+                    "path": "Understand-Anything/understand-anything-plugin/skills/understand-explain/SKILL.md"
+                },
+                {
+                    "name": "understand-figma",
+                    "path": "Understand-Anything/understand-anything-plugin/skills/understand-figma/SKILL.md"
+                },
+                {
+                    "name": "understand-knowledge",
+                    "path": "Understand-Anything/understand-anything-plugin/skills/understand-knowledge/SKILL.md"
+                },
+                {
+                    "name": "understand-onboard",
+                    "path": "Understand-Anything/understand-anything-plugin/skills/understand-onboard/SKILL.md"
+                }
+            ],
+            "agents": [
+                "Understand-Anything/understand-anything-plugin/agents/architecture-analyzer.md",
+                "Understand-Anything/understand-anything-plugin/agents/article-analyzer.md",
+                "Understand-Anything/understand-anything-plugin/agents/assemble-reviewer.md",
+                "Understand-Anything/understand-anything-plugin/agents/design-analyzer.md",
+                "Understand-Anything/understand-anything-plugin/agents/domain-analyzer.md",
+                "Understand-Anything/understand-anything-plugin/agents/file-analyzer.md",
+                "Understand-Anything/understand-anything-plugin/agents/graph-reviewer.md",
+                "Understand-Anything/understand-anything-plugin/agents/knowledge-graph-guide.md",
+                "Understand-Anything/understand-anything-plugin/agents/project-scanner.md",
+                "Understand-Anything/understand-anything-plugin/agents/tour-builder.md"
+            ],
+            "output": {
+                "dir": ".ua/",
+                "format": "knowledge-graph.json"
+            }
+        },
+        "graphify": {
+            "path": "graphify",
+            "type": "python-library",
+            "version": "0.9.95",
+            "entry_points": [
+                "detect",
+                "extract",
+                "build",
+                "cluster",
+                "analyze",
+                "report",
+                "export"
+            ],
+            "agents": [],
+            "skills": [],
+            "output": {
+                "dir": "graphify-out/",
+                "format": "graph.json"
+            }
+        },
+        "humanizer": {
+            "path": "humanizer",
+            "type": "skill-only",
+            "version": "3.1.0",
+            "skills": [
+                {
+                    "name": "humanizer",
+                    "path": "humanizer/SKILL.md"
+                }
+            ],
+            "agents": [],
+            "invocation": "embedded-mode"
+        },
+        "ponytail": {
+            "path": "ponytail",
+            "type": "plugin",
+            "version": "5.3.2",
+            "levels": [
+                "lite",
+                "full",
+                "ultra"
+            ],
+            "skills": [
+                {
+                    "name": "ponytail",
+                    "path": "ponytail/skills/ponytail/SKILL.md"
+                },
+                {
+                    "name": "ponytail-audit",
+                    "path": "ponytail/skills/ponytail-audit/SKILL.md"
+                },
+                {
+                    "name": "ponytail-debt",
+                    "path": "ponytail/skills/ponytail-debt/SKILL.md"
+                },
+                {
+                    "name": "ponytail-gain",
+                    "path": "ponytail/skills/ponytail-gain/SKILL.md"
+                },
+                {
+                    "name": "ponytail-help",
+                    "path": "ponytail/skills/ponytail-help/SKILL.md"
+                },
+                {
+                    "name": "ponytail-review",
+                    "path": "ponytail/skills/ponytail-review/SKILL.md"
+                }
+            ],
+            "agents": []
+        },
+        "caveman": {
+            "path": "caveman",
+            "type": "plugin",
+            "version": "4.0.1",
+            "modes": [
+                "caveman",
+                "ultracave",
+                "megacave"
+            ],
+            "skills": [
+                {
+                    "name": "cavecrew",
+                    "path": "caveman/skills/cavecrew/SKILL.md"
+                },
+                {
+                    "name": "caveman",
+                    "path": "caveman/skills/caveman/SKILL.md"
+                },
+                {
+                    "name": "caveman-commit",
+                    "path": "caveman/skills/caveman-commit/SKILL.md"
+                },
+                {
+                    "name": "caveman-compress",
+                    "path": "caveman/skills/caveman-compress/SKILL.md"
+                },
+                {
+                    "name": "caveman-discover",
+                    "path": "caveman/skills/caveman-discover/SKILL.md"
+                },
+                {
+                    "name": "caveman-evidence-review",
+                    "path": "caveman/skills/caveman-evidence-review/SKILL.md"
+                },
+                {
+                    "name": "caveman-explore",
+                    "path": "caveman/skills/caveman-explore/SKILL.md"
+                },
+                {
+                    "name": "caveman-help",
+                    "path": "caveman/skills/caveman-help/SKILL.md"
+                },
+                {
+                    "name": "caveman-learn",
+                    "path": "caveman/skills/caveman-learn/SKILL.md"
+                },
+                {
+                    "name": "caveman-manage",
+                    "path": "caveman/skills/caveman-manage/SKILL.md"
+                },
+                {
+                    "name": "caveman-optimize",
+                    "path": "caveman/skills/caveman-optimize/SKILL.md"
+                },
+                {
+                    "name": "caveman-review",
+                    "path": "caveman/skills/caveman-review/SKILL.md"
+                },
+                {
+                    "name": "caveman-setup",
+                    "path": "caveman/skills/caveman-setup/SKILL.md"
+                },
+                {
+                    "name": "caveman-stats",
+                    "path": "caveman/skills/caveman-stats/SKILL.md"
+                },
+                {
+                    "name": "investigate-first",
+                    "path": "caveman/skills/investigate-first/SKILL.md"
+                },
+                {
+                    "name": "lean-build",
+                    "path": "caveman/skills/lean-build/SKILL.md"
+                },
+                {
+                    "name": "megacave",
+                    "path": "caveman/skills/megacave/SKILL.md"
+                },
+                {
+                    "name": "migration",
+                    "path": "caveman/skills/migration/SKILL.md"
+                },
+                {
+                    "name": "safe-refactor",
+                    "path": "caveman/skills/safe-refactor/SKILL.md"
+                },
+                {
+                    "name": "surgical-patch",
+                    "path": "caveman/skills/surgical-patch/SKILL.md"
+                },
+                {
+                    "name": "ultracave",
+                    "path": "caveman/skills/ultracave/SKILL.md"
+                },
+                {
+                    "name": "verify-and-stop",
+                    "path": "caveman/skills/verify-and-stop/SKILL.md"
+                }
+            ],
+            "agents": [
+                "caveman/agents/cavecrew-builder.md",
+                "caveman/agents/cavecrew-investigator.md",
+                "caveman/agents/cavecrew-reviewer.md"
+            ]
+        },
+        "agent-skills": {
+            "path": "agent-skills",
+            "type": "plugin",
+            "version": "0.6.13",
+            "skills": [
+                {
+                    "name": "api-and-interface-design",
+                    "path": "agent-skills/skills/api-and-interface-design/SKILL.md"
+                },
+                {
+                    "name": "browser-testing-with-devtools",
+                    "path": "agent-skills/skills/browser-testing-with-devtools/SKILL.md"
+                },
+                {
+                    "name": "ci-cd-and-automation",
+                    "path": "agent-skills/skills/ci-cd-and-automation/SKILL.md"
+                },
+                {
+                    "name": "code-review-and-quality",
+                    "path": "agent-skills/skills/code-review-and-quality/SKILL.md"
+                },
+                {
+                    "name": "code-simplification",
+                    "path": "agent-skills/skills/code-simplification/SKILL.md"
+                },
+                {
+                    "name": "constraint-driven-development",
+                    "path": "agent-skills/skills/constraint-driven-development/SKILL.md"
+                },
+                {
+                    "name": "context-engineering",
+                    "path": "agent-skills/skills/context-engineering/SKILL.md"
+                },
+                {
+                    "name": "debugging-and-error-recovery",
+                    "path": "agent-skills/skills/debugging-and-error-recovery/SKILL.md"
+                },
+                {
+                    "name": "deprecation-and-migration",
+                    "path": "agent-skills/skills/deprecation-and-migration/SKILL.md"
+                },
+                {
+                    "name": "documentation-and-adrs",
+                    "path": "agent-skills/skills/documentation-and-adrs/SKILL.md"
+                },
+                {
+                    "name": "doubt-driven-development",
+                    "path": "agent-skills/skills/doubt-driven-development/SKILL.md"
+                },
+                {
+                    "name": "frontend-ui-engineering",
+                    "path": "agent-skills/skills/frontend-ui-engineering/SKILL.md"
+                },
+                {
+                    "name": "git-workflow-and-versioning",
+                    "path": "agent-skills/skills/git-workflow-and-versioning/SKILL.md"
+                },
+                {
+                    "name": "idea-refine",
+                    "path": "agent-skills/skills/idea-refine/SKILL.md"
+                },
+                {
+                    "name": "incremental-implementation",
+                    "path": "agent-skills/skills/incremental-implementation/SKILL.md"
+                },
+                {
+                    "name": "interview-me",
+                    "path": "agent-skills/skills/interview-me/SKILL.md"
+                },
+                {
+                    "name": "observability-and-instrumentation",
+                    "path": "agent-skills/skills/observability-and-instrumentation/SKILL.md"
+                },
+                {
+                    "name": "performance-optimization",
+                    "path": "agent-skills/skills/performance-optimization/SKILL.md"
+                },
+                {
+                    "name": "planning-and-task-breakdown",
+                    "path": "agent-skills/skills/planning-and-task-breakdown/SKILL.md"
+                },
+                {
+                    "name": "security-and-hardening",
+                    "path": "agent-skills/skills/security-and-hardening/SKILL.md"
+                },
+                {
+                    "name": "shipping-and-launch",
+                    "path": "agent-skills/skills/shipping-and-launch/SKILL.md"
+                },
+                {
+                    "name": "source-driven-development",
+                    "path": "agent-skills/skills/source-driven-development/SKILL.md"
+                },
+                {
+                    "name": "spec-driven-development",
+                    "path": "agent-skills/skills/spec-driven-development/SKILL.md"
+                },
+                {
+                    "name": "test-driven-development",
+                    "path": "agent-skills/skills/test-driven-development/SKILL.md"
+                },
+                {
+                    "name": "using-agent-skills",
+                    "path": "agent-skills/skills/using-agent-skills/SKILL.md"
+                }
+            ],
+            "agents": [
+                "agent-skills/agents/code-reviewer.md",
+                "agent-skills/agents/security-auditor.md",
+                "agent-skills/agents/test-engineer.md",
+                "agent-skills/agents/web-performance-auditor.md"
+            ]
+        }
+    }
+}
