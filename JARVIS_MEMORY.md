@@ -1,10 +1,10 @@
 ---
 type: jarvis-global-memory
-version: 1
+version: 2
 created: "2026-10-24T13:42:30Z"
-last_modified: "2026-10-24T13:42:30Z"
+last_modified: "2026-10-25T09:44:00Z"
 linked_projects: []
-tags: [global, orchestrator, rules]
+tags: [global, orchestrator, rules, v0.2.0]
 ---
 
 # Jarvis Global Memory
@@ -14,30 +14,40 @@ tags: [global, orchestrator, rules]
 
 ## Global Coding Standards
 
-<!-- Ultra-concise rules that apply across ALL projects. One line per rule. -->
+- Always enforce 10-point Anti-Slop checklist on UI/UX work (no generic 3-card columns, stock gradients, emoji functional icons).
+- Motion frequency gate: UI elements interacted with 100+ times/day receive NO animation. Standard animations capped at 350ms with custom cubic-bezier curves.
+- Performance budget: animate only `transform` and `opacity`; never layout properties (`width`, `height`, `margin`).
+- Always include `@media (prefers-reduced-motion: reduce)` fallbacks.
+- Strictly adhere to semantic token architectures (`--color-ground`, `--color-surface`, `--color-ink`, `--color-accent`, `--color-border`).
 
 ## Orchestrator Routing Rules
 
-<!-- How Jarvis routes tasks to plugins. Updated as patterns emerge. -->
+- Mandatory 4-Repo Ensemble Rule: all UI/UX requests evaluate `impeccable`, `skills`, `taste-skill`, and `ui-ux-pro-max-skill`.
+- Strict "design" Keyword Naming Rule: all design sub-agents must contain "design" (`jarvis-design-...`).
+- Zero-Bloat Context Isolation: sub-agents load only their assigned single SKILL.md slice.
+- Lazy-loading protocol: consult `config/registry.json` before injecting skills.
 
 ## User Preferences
 
 - default_compression: ponytail-full + caveman
 - default_planning_depth: atomic
+- default_design_quality: impeccable
 - preferred_ide: antigravity
 
 ## Plugin Version Log
 
-<!-- Updated by /jarvis-update -->
-
-| Plugin | Version | Last Synced |
-|--------|---------|-------------|
-| Understand-Anything | 2.9.7 | 2026-10-24 |
-| graphify | 0.9.95 | 2026-10-24 |
-| humanizer | 3.1.0 | 2026-10-24 |
-| ponytail | 5.3.2 | 2026-10-24 |
-| caveman | 4.0.1 | 2026-10-24 |
-| agent-skills | 0.6.13 | 2026-10-24 |
+| Pillar | Plugin | Version | Last Synced |
+|--------|--------|---------|-------------|
+| develop | Understand-Anything | 2.9.7 | 2026-10-24 |
+| develop | graphify | 0.9.95 | 2026-10-24 |
+| develop | humanizer | 3.1.0 | 2026-10-24 |
+| develop | ponytail | 5.3.2 | 2026-10-24 |
+| develop | caveman | 4.0.1 | 2026-10-24 |
+| develop | agent-skills | 0.6.13 | 2026-10-24 |
+| design | impeccable | 1.0.0 | 2026-10-25 |
+| design | skills (emilkowalski) | 1.0.0 | 2026-10-25 |
+| design | taste-skill | 1.0.0 | 2026-10-25 |
+| design | ui-ux-pro-max-skill | 1.0.0 | 2026-10-25 |
 
 ## Global Blame / Post-Mortem Log
 

@@ -1,0 +1,16 @@
+---
+description: -
+globs: []
+alwaysApply: false
+---
+
+# jarvis-design-motion-engineer
+
+Direct sub-agent adapter for Jarvis design engineering.
+
+**Canonical agent definition:** `agents/jarvis-design-motion-engineer.md`
+
+To invoke directly, use: `/jarvis-design-motion-engineer` in your chat.
+
+Follow instructions in:
+`~/.gemini/config/plugins/jarvis-matrix/agents/jarvis-design-motion-engineer.md`

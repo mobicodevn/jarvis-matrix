@@ -1,0 +1,7 @@
+[command]
+name = "jarvis-design-motion-engineer"
+description = "-"
+canonical_agent = "agents/jarvis-design-motion-engineer.md"
+
+[invocation]
+method = "agent-dispatch"

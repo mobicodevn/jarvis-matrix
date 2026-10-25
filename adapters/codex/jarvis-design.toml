@@ -1,0 +1,7 @@
+[command]
+name = "jarvis-design"
+description = "-"
+canonical_skill = "skills/jarvis-design/SKILL.md"
+
+[invocation]
+method = "skill-delegation"

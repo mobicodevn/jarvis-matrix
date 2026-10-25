@@ -26,7 +26,7 @@ Do NOT load all skills at startup. Follow this sequence on every invocation:
 3. Read only the exact SKILL.md files needed — nothing more
 4. Inject those files into sub-agent context alongside the task
 
-**Rationale:** Six plugins with dozens of skills would consume thousands of tokens if pre-loaded.
+**Rationale:** Ten plugins across develop and design pillars with dozens of skills would consume thousands of tokens if pre-loaded.
 
 ### 3. Compression Decision Matrix
 
@@ -37,6 +37,7 @@ Apply compression levels as follows:
 | `/jarvis-spec` | **None** | — | None |
 | `/jarvis-plan` | ponytail-lite | > 20 tasks | ponytail-full |
 | `/jarvis-build` | ponytail-full + caveman | > 3 files per task | ponytail-ultra + ultracave |
+| `/jarvis-design` | ponytail-lite | > 5 components | ponytail-full |
 | `/jarvis-review` | ponytail-lite | — | ponytail-full |
 | `/jarvis-understand` | ponytail-full | > 500 files | ponytail-ultra + caveman |
 | Sub-agent communications | caveman (always) | — | ultracave |
@@ -51,22 +52,48 @@ When dispatching sub-agents for a plan:
 4. Gate on wave completion before starting the next wave
 5. Each sub-agent receives **only** its atomic task file, the relevant CONTEXT.md slice, and loaded skills — not the entire project context
 
-### 5. Never Rewrite Plugins
+### 5. Design Sub-Agent Fleet & Zero-Bloat Isolation
+
+When handling UI/UX, styling, or animation tasks under `/jarvis-design`:
+
+1. **Strict "design" Keyword Naming Rule:**
+   All design sub-agents must contain the keyword `design` to eliminate any confusion with `develop` skills:
+   - `jarvis-design-interrogator`: Requirement clarification (≥95% gate)
+   - `jarvis-design-architect`: Information architecture & layout grid
+   - `jarvis-design-taste-director`: Art direction & 10-point Anti-Slop checklist
+   - `jarvis-design-motion-engineer`: Emil Kowalski spring physics & timing budgets
+   - `jarvis-design-executor`: Impeccable production code synthesizer
+   - `jarvis-designer`: Master pipeline coordinator
+   - *Note: `apex-update` is explicitly excluded and omitted.*
+
+2. **Zero-Bloat Context Isolation:**
+   Sub-agents must NEVER load the entire `github-plugins/design/` directory. Each sub-agent is strictly restricted to its specific assigned SKILL.md slice.
+
+3. **Mandatory 4-Repo Ensemble Rule:**
+   The design pipeline MUST evaluate perspectives across all 4 design repositories (`impeccable`, `skills`, `taste-skill`, `ui-ux-pro-max-skill`). Skipping any repo is a routing violation.
+
+4. **Parallel vs. Sequential Dispatch:**
+   - Interrogation gate is strictly sequential (≥ 95% clarity required before downstream dispatch).
+   - Independent design tasks (`jarvis-design-taste-director` + `jarvis-design-motion-engineer`) are dispatched in parallel.
+   - Code synthesis (`jarvis-design-executor`) runs after receiving tokens and layout.
+   - Quality critique runs sequentially post-synthesis.
+
+### 6. Never Rewrite Plugins
 
 Jarvis-Matrix routes to plugins. It does NOT rewrite them.
 
 - Read plugin capabilities from `config/registry.json`
-- Invoke them by reading their SKILL.md files and delegating
+- Invoke them by reading their SKILL.md files and delegating dynamically
 - Treat each plugin's SKILL.md as authoritative
 
-### 6. Registry Fallback
+### 7. Registry Fallback
 
 If `config/registry.json` does not exist:
-1. Warn the user: "Registry not found. Run `/jarvis-setup` to initialize."
+1. Warn the user: "Registry not found. Run `bash scripts/setup.sh` to initialize."
 2. Do not attempt to invoke any plugin
 3. Stop and wait for setup
 
-### 7. WikiLink Maintenance
+### 8. WikiLink Maintenance
 
 Every write to any brain file (JARVIS_MEMORY.md, CONTEXT.md, PROJECT_MEMORY.md) MUST:
 - Preserve all existing `[[WikiLinks]]`
@@ -79,7 +106,6 @@ Every write to any brain file (JARVIS_MEMORY.md, CONTEXT.md, PROJECT_MEMORY.md) 
 
 | User Intent | Skill to Invoke | Plugins Used |
 |-------------|-----------------|-------------|
-| First-time setup / add plugins | `/jarvis-setup` | — |
 | Understand this codebase | `/jarvis-understand` | UA, graphify, humanizer |
 | Load context into session | `/jarvis-context` | — |
 | Update plugins to latest | `/jarvis-update` | — |
@@ -88,6 +114,7 @@ Every write to any brain file (JARVIS_MEMORY.md, CONTEXT.md, PROJECT_MEMORY.md) 
 | Create an implementation plan | `/jarvis-plan` | ponytail, caveman, agent-skills, humanizer |
 | Execute the plan | `/jarvis-build start` | ponytail, caveman, agent-skills |
 | Stop current build | `/jarvis-build stop` | — |
+| Design UI/UX & animations | `/jarvis-design` | impeccable, skills, taste-skill, ui-ux-pro-max-skill |
 | Review code quality | `/jarvis-review` | agent-skills agents |
 | View/edit global memory | `/jarvis-memory` | — |
 | View/edit project memory | `/jarvis-project-memory` | — |

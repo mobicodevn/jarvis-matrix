@@ -1,0 +1,7 @@
+[command]
+name = "jarvis-design-taste-director"
+description = "-"
+canonical_agent = "agents/jarvis-design-taste-director.md"
+
+[invocation]
+method = "agent-dispatch"

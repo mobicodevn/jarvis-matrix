@@ -1,10 +1,11 @@
-# Jarvis-Matrix — Detailed Routing Decision Tree
+# Jarvis-Matrix — Routing Reference & Decision Rules
 
-> Supplement to `rules/AGENTS.md`. Contains the full routing logic for mapping user intent to plugin invocations.
+> Companion reference for Antigravity, Cursor, Claude Code, and Codex adapters.
+> Describes how the orchestrator evaluates user intents and maps them to external plugins across develop and design pillars.
 
 ---
 
-## Routing Decision Tree
+## The Master Routing Loop
 
 ```
 User invokes /jarvis-* command
@@ -15,90 +16,131 @@ User invokes /jarvis-* command
 │
 ├── Step 2: Registry Check
 │   ├── registry.json exists? → continue
-│   └── Missing → warn + halt ("Run /jarvis-setup")
+│   └── Missing → warn + halt ("Run bash scripts/setup.sh")
 │
 ├── Step 3: Identify Required Plugins
-│   └── Consult registry.json for skill paths
+│   └── Consult registry.json for skill paths (develop and design pillars)
 │
-├── Step 4: Load Only Required Skills
+├── Step 4: Load Only Required Skills (Zero-Bloat Context Isolation)
 │   └── Read exact SKILL.md files → inject into context
 │
 └── Step 5: Execute Skill
-    └── Dispatch sub-agents if needed
+    └── Dispatch sub-agents if needed (parallel or sequential waves)
 ```
 
 ---
 
 ## Plugin Routing Reference
 
-### Understand-Anything
+### Pillar 1: Engineering Plugins (`develop/`)
 
+#### Understand-Anything
 - **Registry key:** `understand-anything`
 - **Primary skill:** `understand-anything-plugin/skills/understand/SKILL.md`
 - **Output:** `.ua/knowledge-graph.json` (in project root)
 - **Invocation:** Read skill, delegate full project scan
 - **Used by:** `/jarvis-understand`, `/jarvis-refresh`
 
-### graphify
-
+#### graphify
 - **Registry key:** `graphify`
-- **Type:** Python library (not a skill file — invoke as pipeline)
-- **Pipeline steps:** detect → extract → build → cluster → analyze → report → export
+- **Type:** Python library (pipeline invocation: detect → extract → build → cluster → analyze → report → export)
 - **Output:** `graphify-out/graph.json`, `GRAPH_REPORT.md`
 - **Used by:** `/jarvis-understand`, `/jarvis-refresh`
 
-### humanizer
-
+#### humanizer
 - **Registry key:** `humanizer`
 - **Skill path:** `humanizer/SKILL.md`
 - **Invocation mode:** embedded (pass text, get back clean prose)
 - **Used by:** `/jarvis-understand` (summaries), `/jarvis-plan` (overview), `/jarvis-review` (report)
 
-### ponytail
-
+#### ponytail
 - **Registry key:** `ponytail`
-- **Levels:**
-  - `lite` — Remove unnecessary words, minimal scope reduction
-  - `full` — Aggressively scope-minimize each task (default for builds)
-  - `ultra` — Maximum compression, smallest possible change
+- **Levels:** `lite`, `full`, `ultra`
 - **Used by:** `/jarvis-plan`, `/jarvis-build`, `/jarvis-understand`
 
-### caveman
-
+#### caveman
 - **Registry key:** `caveman`
-- **Modes:**
-  - `caveman` — Basic compression for sub-agent communications
-  - `ultracave` — Heavy compression for large context windows
-  - `megacave` — Maximum; strip all prose to minimal tokens
-- **Agents:** `cavecrew-investigator`, `cavecrew-builder`, `cavecrew-reviewer`
+- **Modes:** `caveman`, `ultracave`, `megacave`
 - **Used by:** `/jarvis-build` (sub-agent comms), `/jarvis-understand` (large projects)
 
-### agent-skills
-
+#### agent-skills
 - **Registry key:** `agent-skills`
-- **Key skills for Jarvis routing:**
-  - `spec-driven-development` — Spec interview flow
-  - `interview-me` — Clarification question batching
-  - `planning-and-task-breakdown` — Atomic task decomposition
-  - `incremental-implementation` — Single-task implementation
-  - `code-review-and-quality` — Code review workflow
-- **Agents:**
-  - `code-reviewer.md` — Code quality review
-  - `security-auditor.md` — Security vulnerability scan
-  - `test-engineer.md` — Test coverage review
-  - `web-performance-auditor.md` — Performance analysis
+- **Key skills:** `spec-driven-development`, `interview-me`, `planning-and-task-breakdown`, `incremental-implementation`, `code-review-and-quality`
 - **Used by:** `/jarvis-spec`, `/jarvis-plan`, `/jarvis-build`, `/jarvis-review`
+
+---
+
+### Pillar 2: UI/UX, Aesthetic & Motion Plugins (`design/`)
+
+#### impeccable
+- **Registry key:** `impeccable`
+- **Canonical skill:** `impeccable/.gemini/skills/impeccable/SKILL.md`
+- **Capability:** Component polish, craft details, interaction completeness, and execution standards.
+- **Used by:** `/jarvis-design`, `jarvis-design-executor`
+
+#### skills (emilkowalski)
+- **Registry key:** `skills`
+- **Key skills:** `animate`, `animation-performance`, `animation-vocabulary`, `review-animations`, `improve-animations`
+- **Capability:** Spring physics, custom cubic-bezier curves, duration budgets, frequency gates.
+- **Used by:** `/jarvis-design`, `jarvis-design-motion-engineer`
+
+#### taste-skill
+- **Registry key:** `taste-skill`
+- **Canonical skill:** `taste-skill/skills/taste-skill/SKILL.md`
+- **Capability:** Visual hierarchy, typography pairing, spacing scales, 10-point Anti-Slop checklist.
+- **Used by:** `/jarvis-design`, `jarvis-design-taste-director`
+
+#### ui-ux-pro-max-skill
+- **Registry key:** `ui-ux-pro-max-skill`
+- **Key skills:** `ui-ux-pro-max`, `design`, `design-system`, `ui-styling`
+- **Capability:** 192 product categories, 79 UI styles, 34 landing page patterns, token architecture.
+- **Used by:** `/jarvis-design`, `jarvis-design-architect`, `jarvis-design-interrogator`
+
+---
+
+## Design Sub-Agent Pipeline Routing Tree
+
+```
+/jarvis-design invoked
+│
+├── Phase 1: Clarification Gate (jarvis-design-interrogator)
+│   ├── Score prompt across 6 weighted dimensions
+│   ├── Confidence >= 95%? → Proceed to Phase 2
+│   └── Confidence < 95%? → Ask <= 5 targeted questions (gate blocks coding)
+│
+├── Phase 2: Category Ingestion
+│   └── Match product type to 1 of 192 UI/UX Pro Max categories
+│
+├── Phase 3 & 4: Architecture & Parallel Design Synthesis
+│   ├── Parallel Stream A: jarvis-design-taste-director (Colors, typography, anti-slop)
+│   ├── Parallel Stream B: jarvis-design-motion-engineer (Springs, timing curves)
+│   └── Structural Stream: jarvis-design-architect (Claim-driven IA & layout grid)
+│
+├── Phase 5: Code Synthesis (jarvis-design-executor)
+│   └── Impeccable execution (motion-off first, tokens, responsive, accessible)
+│
+└── Phase 6: Sequential Quality Review
+    ├── Anti-slop checklist verification
+    ├── Emil Kowalski animation performance audit
+    └── Persist finalized tokens to [[PROJECT_MEMORY.md]]
+```
 
 ---
 
 ## Memory Read/Write Matrix
 
-| Skill | JARVIS_MEMORY | CONTEXT | PROJECT_MEMORY |
-|-------|:---:|:---:|:---:|
-| `/jarvis-setup` | **W** (init) | — | — |
+| Skill / Sub-Agent | JARVIS_MEMORY | CONTEXT | PROJECT_MEMORY |
+|-------------------|:---:|:---:|:---:|
+| `scripts/setup.sh` | **W** (init) | — | — |
+| `/jarvis-design` | **R** (preferences) | **R** (architecture) | **RW** (design tokens) |
+| `jarvis-design-interrogator` | **R** | — | **RW** (spec) |
+| `jarvis-design-architect` | **R** | **R** | **RW** (layout) |
+| `jarvis-design-taste-director` | **R** (banned patterns) | — | **RW** (tokens) |
+| `jarvis-design-motion-engineer`| **R** (timing preferences)| — | **RW** (motion) |
+| `jarvis-design-executor` | **R** | **R** | **RW** (decisions) |
 | `/jarvis-understand` | R | **W** (create) | R |
 | `/jarvis-context` | **R** | **R** | **R** |
-| `/jarvis-update` | **RW** (versions) | — | — |
+| `/jarvis-update` | **RW** (versions x 10) | — | — |
 | `/jarvis-refresh` | R | **RW** (delta) | **RW** (links) |
 | `/jarvis-spec` | **R** | **R** | **RW** (spec) |
 | `/jarvis-plan` | **R** | **R** | **RW** (plan) |
@@ -125,13 +167,16 @@ User invokes /jarvis-* command
 
 ---
 
-## Error Handling Rules
+## Error Handling & Guardrails
 
 | Condition | Action |
 |-----------|--------|
-| Registry missing | Halt + suggest `/jarvis-setup` |
+| Registry missing | Halt + suggest `bash scripts/setup.sh` |
+| Design plugin repo missing | Warn on stderr, skip that plugin, continue with remaining |
+| `/jarvis-design` called with zero design plugins | Error: "No design plugins found. Run `bash scripts/setup.sh`." |
+| Context bloat attempt (loading full repo) | Router blocks traversal; enforces single SKILL.md slice |
+| Requirement clarity < 95% | Block code generation; ask up to 5 targeted questions |
+| Skipped repo in design ensemble | Linter/router assertion fails; halt and inject missing repo |
 | CONTEXT.md missing during `/jarvis-build` | Warn user, offer to proceed without context |
-| Plugin repo missing | Warn on stderr, skip that plugin, continue |
-| No git repo in project | Cache disabled, full analysis always |
 | PROJECT_MEMORY.md missing | Create from template, continue |
 | JARVIS_MEMORY.md missing | Create from template, continue |

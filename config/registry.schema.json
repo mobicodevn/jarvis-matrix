@@ -7,11 +7,15 @@
   "properties": {
     "version": {
       "type": "integer",
-      "description": "Registry schema version"
+      "description": "Registry schema version (1 for develop-only, 2 for develop + design)"
     },
     "plugins_root": {
       "type": "string",
-      "description": "Absolute path to the github-plugins directory"
+      "description": "Absolute path to the develop github-plugins directory"
+    },
+    "design_plugins_root": {
+      "type": "string",
+      "description": "Absolute path to the design github-plugins directory"
     },
     "last_indexed": {
       "type": "string",
@@ -20,7 +24,14 @@
     },
     "plugins": {
       "type": "object",
-      "description": "Map of plugin-id to plugin metadata",
+      "description": "Map of develop plugin-id to plugin metadata",
+      "additionalProperties": {
+        "$ref": "#/definitions/Plugin"
+      }
+    },
+    "design_plugins": {
+      "type": "object",
+      "description": "Map of design plugin-id to plugin metadata",
       "additionalProperties": {
         "$ref": "#/definitions/Plugin"
       }
@@ -33,11 +44,11 @@
       "properties": {
         "path": {
           "type": "string",
-          "description": "Relative path from plugins_root to this plugin directory"
+          "description": "Relative path from plugins root to this plugin directory"
         },
         "type": {
           "type": "string",
-          "enum": ["plugin", "monorepo", "python-library", "skill-only"],
+          "enum": ["plugin", "monorepo", "python-library", "skill-only", "skill-collection", "single-skill"],
           "description": "Plugin structural type"
         },
         "version": {
@@ -79,7 +90,7 @@
       "required": ["name", "path"],
       "properties": {
         "name": { "type": "string" },
-        "path": { "type": "string", "description": "Relative path from plugins_root to SKILL.md" }
+        "path": { "type": "string", "description": "Relative path from plugins root to SKILL.md" }
       }
     },
     "OutputSpec": {

@@ -1,0 +1,16 @@
+---
+description: -
+globs: []
+alwaysApply: false
+---
+
+# jarvis-designer
+
+Direct sub-agent adapter for Jarvis design engineering.
+
+**Canonical agent definition:** `agents/jarvis-designer.md`
+
+To invoke directly, use: `/jarvis-designer` in your chat.
+
+Follow instructions in:
+`~/.gemini/config/plugins/jarvis-matrix/agents/jarvis-designer.md`

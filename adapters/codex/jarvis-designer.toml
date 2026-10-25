@@ -1,0 +1,7 @@
+[command]
+name = "jarvis-designer"
+description = "-"
+canonical_agent = "agents/jarvis-designer.md"
+
+[invocation]
+method = "agent-dispatch"

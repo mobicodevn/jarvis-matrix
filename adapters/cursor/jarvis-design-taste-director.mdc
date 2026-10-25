@@ -1,0 +1,16 @@
+---
+description: -
+globs: []
+alwaysApply: false
+---
+
+# jarvis-design-taste-director
+
+Direct sub-agent adapter for Jarvis design engineering.
+
+**Canonical agent definition:** `agents/jarvis-design-taste-director.md`
+
+To invoke directly, use: `/jarvis-design-taste-director` in your chat.
+
+Follow instructions in:
+`~/.gemini/config/plugins/jarvis-matrix/agents/jarvis-design-taste-director.md`

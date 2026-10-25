@@ -1,9 +1,7 @@
 [command]
 name = "jarvis-understand"
-description = ""
+description = "Jarvis-Matrix skill: jarvis-understand"
 canonical_skill = "skills/jarvis-understand/SKILL.md"
 
 [invocation]
-# Invoke by reading the canonical SKILL.md instructions
-# Path: ~/.gemini/config/plugins/jarvis-matrix/skills/jarvis-understand/SKILL.md
 method = "skill-delegation"

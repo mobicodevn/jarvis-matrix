@@ -1,5 +1,6 @@
 {
   "plugins_root": "/Users/kietnguyen/.gemini/config/github-plugins/develop",
+  "design_plugins_root": "/Users/kietnguyen/.gemini/config/github-plugins/design",
   "detected_ides": [
     "antigravity",
     "cursor",
@@ -7,5 +8,6 @@
     "codex"
   ],
   "setup_completed": true,
-  "setup_date": "2026-10-24T13:42:55Z"
+  "setup_date": "2026-10-25T09:41:00Z",
+  "version": "0.2.0"
 }

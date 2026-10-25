@@ -1,5 +1,5 @@
 {
   "name": "jarvis-matrix",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Central multi-agent orchestrator and dynamic adapter plugin. Routes to local skill libraries, manages Obsidian-style project memory, and bridges across Antigravity, Cursor, Claude Code, and Codex."
 }

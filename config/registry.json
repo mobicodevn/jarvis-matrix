@@ -1,7 +1,8 @@
 {
-    "version": 1,
+    "version": 2,
     "plugins_root": "/Users/kietnguyen/.gemini/config/github-plugins/develop",
-    "last_indexed": "2026-10-24T13:42:18Z",
+    "design_plugins_root": "/Users/kietnguyen/.gemini/config/github-plugins/design",
+    "last_indexed": "2026-10-25T02:41:11Z",
     "plugins": {
         "understand-anything": {
             "path": "Understand-Anything",
@@ -349,6 +350,136 @@
                 "agent-skills/agents/test-engineer.md",
                 "agent-skills/agents/web-performance-auditor.md"
             ]
+        }
+    },
+    "design_plugins": {
+        "impeccable": {
+            "path": "impeccable",
+            "type": "monorepo",
+            "version": "4.7.1",
+            "skills": [
+                {
+                    "name": "impeccable",
+                    "path": "impeccable/.gemini/skills/impeccable/SKILL.md"
+                }
+            ],
+            "agents": []
+        },
+        "skills": {
+            "path": "skills",
+            "type": "skill-collection",
+            "version": "",
+            "skills": [
+                {
+                    "name": "animate",
+                    "path": "skills/skills/animate/SKILL.md"
+                },
+                {
+                    "name": "animate-expo",
+                    "path": "skills/skills/animate-expo/SKILL.md"
+                },
+                {
+                    "name": "animation-performance",
+                    "path": "skills/skills/animation-performance/SKILL.md"
+                },
+                {
+                    "name": "animation-vocabulary",
+                    "path": "skills/skills/animation-vocabulary/SKILL.md"
+                },
+                {
+                    "name": "apple-design",
+                    "path": "skills/skills/apple-design/SKILL.md"
+                },
+                {
+                    "name": "ask-sonner",
+                    "path": "skills/skills/ask-sonner/SKILL.md"
+                },
+                {
+                    "name": "break-ui",
+                    "path": "skills/skills/break-ui/SKILL.md"
+                },
+                {
+                    "name": "emil-design-eng",
+                    "path": "skills/skills/emil-design-eng/SKILL.md"
+                },
+                {
+                    "name": "find-animation-opportunities",
+                    "path": "skills/skills/find-animation-opportunities/SKILL.md"
+                },
+                {
+                    "name": "improve-animations",
+                    "path": "skills/skills/improve-animations/SKILL.md"
+                },
+                {
+                    "name": "mobile-native",
+                    "path": "skills/skills/mobile-native/SKILL.md"
+                },
+                {
+                    "name": "pick-ui-library",
+                    "path": "skills/skills/pick-ui-library/SKILL.md"
+                },
+                {
+                    "name": "prototype",
+                    "path": "skills/skills/prototype/SKILL.md"
+                },
+                {
+                    "name": "review-animations",
+                    "path": "skills/skills/review-animations/SKILL.md"
+                },
+                {
+                    "name": "write-swift",
+                    "path": "skills/skills/write-swift/SKILL.md"
+                }
+            ],
+            "agents": []
+        },
+        "taste-skill": {
+            "path": "taste-skill",
+            "type": "single-skill",
+            "version": "",
+            "skills": [
+                {
+                    "name": "taste-skill",
+                    "path": "taste-skill/skills/taste-skill/SKILL.md"
+                }
+            ],
+            "agents": []
+        },
+        "ui-ux-pro-max-skill": {
+            "path": "ui-ux-pro-max-skill",
+            "type": "skill-collection",
+            "version": "",
+            "skills": [
+                {
+                    "name": "banner-design",
+                    "path": "ui-ux-pro-max-skill/.claude/skills/banner-design/SKILL.md"
+                },
+                {
+                    "name": "brand",
+                    "path": "ui-ux-pro-max-skill/.claude/skills/brand/SKILL.md"
+                },
+                {
+                    "name": "design",
+                    "path": "ui-ux-pro-max-skill/.claude/skills/design/SKILL.md"
+                },
+                {
+                    "name": "design-system",
+                    "path": "ui-ux-pro-max-skill/.claude/skills/design-system/SKILL.md"
+                },
+                {
+                    "name": "slides",
+                    "path": "ui-ux-pro-max-skill/.claude/skills/slides/SKILL.md"
+                },
+                {
+                    "name": "ui-styling",
+                    "path": "ui-ux-pro-max-skill/.claude/skills/ui-styling/SKILL.md"
+                },
+                {
+                    "name": "ui-ux-pro-max",
+                    "path": "ui-ux-pro-max-skill/.claude/skills/ui-ux-pro-max/SKILL.md"
+                }
+            ],
+            "agents": []
         }
     }
 }

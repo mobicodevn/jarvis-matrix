@@ -1,0 +1,7 @@
+[command]
+name = "jarvis-design-architect"
+description = "-"
+canonical_agent = "agents/jarvis-design-architect.md"
+
+[invocation]
+method = "agent-dispatch"

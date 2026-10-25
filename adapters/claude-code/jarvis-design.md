@@ -1,16 +1,16 @@
-# jarvis-setup
+# jarvis-design
 
-
+-
 
 ## Usage
 
 ```
-/jarvis-setup $ARGUMENTS
+/jarvis-design $ARGUMENTS
 ```
 
 ## Instructions
 
 Read and follow the complete skill instructions from:
-`~/.gemini/config/plugins/jarvis-matrix/skills/jarvis-setup/SKILL.md`
+`~/.gemini/config/plugins/jarvis-matrix/skills/jarvis-design/SKILL.md`
 
 Apply all steps defined in the SKILL.md, substituting `$ARGUMENTS` as the user's input.
