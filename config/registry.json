@@ -1,13 +1,14 @@
 {
-    "version": 2,
+    "version": 3,
     "plugins_root": "/Users/kietnguyen/.gemini/config/github-plugins/develop",
     "design_plugins_root": "/Users/kietnguyen/.gemini/config/github-plugins/design",
-    "last_indexed": "2026-10-25T02:41:11Z",
+    "copywriting_plugins_root": "/Users/kietnguyen/.gemini/config/github-plugins/copywriting",
+    "last_indexed": "2026-10-29T02:17:43Z",
     "plugins": {
         "understand-anything": {
             "path": "Understand-Anything",
             "type": "monorepo",
-            "version": "2.9.7",
+            "version": "2.9.8",
             "skills": [
                 {
                     "name": "understand",
@@ -82,19 +83,6 @@
                 "dir": "graphify-out/",
                 "format": "graph.json"
             }
-        },
-        "humanizer": {
-            "path": "humanizer",
-            "type": "skill-only",
-            "version": "3.1.0",
-            "skills": [
-                {
-                    "name": "humanizer",
-                    "path": "humanizer/SKILL.md"
-                }
-            ],
-            "agents": [],
-            "invocation": "embedded-mode"
         },
         "ponytail": {
             "path": "ponytail",
@@ -356,7 +344,7 @@
         "impeccable": {
             "path": "impeccable",
             "type": "monorepo",
-            "version": "4.7.1",
+            "version": "4.8.0",
             "skills": [
                 {
                     "name": "impeccable",
@@ -423,6 +411,10 @@
                     "path": "skills/skills/prototype/SKILL.md"
                 },
                 {
+                    "name": "remove-animations",
+                    "path": "skills/skills/remove-animations/SKILL.md"
+                },
+                {
                     "name": "review-animations",
                     "path": "skills/skills/review-animations/SKILL.md"
                 },
@@ -477,6 +469,73 @@
                 {
                     "name": "ui-ux-pro-max",
                     "path": "ui-ux-pro-max-skill/.claude/skills/ui-ux-pro-max/SKILL.md"
+                }
+            ],
+            "agents": []
+        },
+        "hyperframes": {
+            "path": "hyperframes",
+            "type": "skill-collection",
+            "version": "1.0.0",
+            "skills": [
+                {
+                    "name": "captions-overlay",
+                    "path": "hyperframes/.agents/skills/captions-overlay/SKILL.md"
+                },
+                {
+                    "name": "changelog-video",
+                    "path": "hyperframes/.agents/skills/changelog-video/SKILL.md"
+                }
+            ],
+            "agents": []
+        },
+        "logo-design-skill": {
+            "path": "logo-design-skill",
+            "type": "single-skill",
+            "version": "1.4.5",
+            "skills": [
+                {
+                    "name": "logo-design",
+                    "path": "logo-design-skill/skills/logo-design/SKILL.md"
+                }
+            ],
+            "agents": []
+        }
+    },
+    "copywriting_plugins": {
+        "humanizer": {
+            "path": "humanizer",
+            "type": "skill-only",
+            "version": "3.1.0",
+            "skills": [
+                {
+                    "name": "humanizer",
+                    "path": "humanizer/SKILL.md"
+                }
+            ],
+            "agents": [],
+            "invocation": "embedded-mode"
+        },
+        "vietnamese-humanizer": {
+            "path": "vietnamese-humanizer",
+            "type": "skill-collection",
+            "version": "0.4.6",
+            "skills": [
+                {
+                    "name": "grammar-checker-vi",
+                    "path": "vietnamese-humanizer/skills/grammar-checker-vi/SKILL.md"
+                },
+                {
+                    "name": "humanizer-vi",
+                    "path": "vietnamese-humanizer/skills/humanizer-vi/SKILL.md"
+                },
+                {
+                    "name": "style-guide-vi",
+                    "path": "vietnamese-humanizer/skills/style-guide-vi/SKILL.md"
+                },
+                {
+                    "name": "translationese-cleaner-vi",
+                    "path": "vietnamese-humanizer/skills/translationese-cleaner-vi/SKILL.md"
                 }
             ],
             "agents": []

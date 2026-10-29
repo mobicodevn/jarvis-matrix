@@ -2,7 +2,7 @@
 type: jarvis-plan-overview
 plan_name: v0.2.0
 version: "0.2.0"
-spec: "[[PRP-v0.2.0.md]]"
+spec: "[[.jarvis/plans/v0.2.0/PRP-v0.2.0.md]]"
 created: "2026-10-25T09:35:00+07:00"
 status: completed
 total_tasks: 15
@@ -15,7 +15,7 @@ linked_memory:
 
 # Plan Overview — Jarvis-Matrix v0.2.0
 
-> Companion to [PRP-v0.2.0.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/PRP-v0.2.0.md)  
+> Companion to [PRP-v0.2.0.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/PRP-v0.2.0.md)  
 > Spec Confidence: 99% | Compression Level: `ponytail-lite`
 
 ---
@@ -60,18 +60,18 @@ v0.2.0 introduces the **Design Pillar** to Jarvis-Matrix, incorporating 4 extern
 
 ## 4. Numbered Task Index
 
-- [01-remove-jarvis-setup.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/01-remove-jarvis-setup.md)
-- [02-write-setup-script.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/02-write-setup-script.md)
-- [03-update-registry-schema.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/03-update-registry-schema.md)
-- [04-modify-build-registry.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/04-modify-build-registry.md)
-- [05-update-jarvis-config.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/05-update-jarvis-config.md)
-- [06-create-jarvis-design-skill.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/06-create-jarvis-design-skill.md)
-- [07-create-jarvis-design-subagents.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/07-create-jarvis-design-subagents.md)
-- [08-update-agents-rules.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/08-update-agents-rules.md)
-- [09-update-routing-rules.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/09-update-routing-rules.md)
-- [10-update-jarvis-update-skill.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/10-update-jarvis-update-skill.md)
-- [11-modify-sync-adapters.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/11-modify-sync-adapters.md)
-- [12-create-changelog.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/12-create-changelog.md)
-- [13-update-readme.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/13-update-readme.md)
-- [14-update-jarvis-memory.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/14-update-jarvis-memory.md)
-- [15-refresh-context.md](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/15-refresh-context.md)
+- [01-remove-jarvis-setup.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/01-remove-jarvis-setup.md)
+- [02-write-setup-script.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/02-write-setup-script.md)
+- [03-update-registry-schema.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/03-update-registry-schema.md)
+- [04-modify-build-registry.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/04-modify-build-registry.md)
+- [05-update-jarvis-config.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/05-update-jarvis-config.md)
+- [06-create-jarvis-design-skill.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/06-create-jarvis-design-skill.md)
+- [07-create-jarvis-design-subagents.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/07-create-jarvis-design-subagents.md)
+- [08-update-agents-rules.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/08-update-agents-rules.md)
+- [09-update-routing-rules.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/09-update-routing-rules.md)
+- [10-update-jarvis-update-skill.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/10-update-jarvis-update-skill.md)
+- [11-modify-sync-adapters.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/11-modify-sync-adapters.md)
+- [12-create-changelog.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/12-create-changelog.md)
+- [13-update-readme.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/13-update-readme.md)
+- [14-update-jarvis-memory.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/14-update-jarvis-memory.md)
+- [15-refresh-context.md](~/.gemini/config/plugins/jarvis-matrix/.jarvis/plans/v0.2.0/15-refresh-context.md)

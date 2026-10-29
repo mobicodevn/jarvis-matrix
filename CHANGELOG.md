@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.3.0] - 2026-10-29
+
+### Added
+- **Three-Pillar Architecture (`develop/`, `design/`, `copywriting/`):** Reorganized external plugins into three functional pillars.
+- **Copywriting Pillar (`github-plugins/copywriting/`):** Grouped humanizing and language plugins under a dedicated pillar, adding `vietnamese-humanizer` alongside relocated `humanizer`.
+- **Master Copywriting Agent `jarvis-writer` & Slash Skill `/jarvis-writer`:** Central routing engine that inspects prompt script, token diacritics, or explicit flags (`--vi`/`--en`) to direct requests to the appropriate language engine.
+- **Dedicated Copywriting Slash Skills:**
+  - `/jarvis-writer-vi` — Transforms, drafts, or edits Vietnamese content to eliminate translationese, unnatural passive phrasing, and mechanical structures.
+  - `/jarvis-writer-en` — Edits English content to strip Wikipedia-cataloged AI writing patterns (staged contrasts, forced triads, dash spam, robotic openers) while preserving source facts.
+- **Design Pillar Expansion:**
+  - `hyperframes` (`heygen-com/hyperframes`) — Integrated for animated video changelogs and synchronized captions overlays.
+  - `logo-design-skill` (`kaankiziltug/logo-design-skill`) — Integrated for vector SVG marks, geometric icon construction, and brand identity design.
+- **IDE Adapters for Copywriting:** Generated native bindings for `/jarvis-writer`, `/jarvis-writer-vi`, and `/jarvis-writer-en` across Cursor (`.mdc`), Claude Code (`.md`), and Codex (`.toml`).
+- **Registry Schema v3:** Added `copywriting_plugins_root` and `copywriting_plugins` to `config/registry.schema.json`.
+
+### Changed
+- **Relocated `humanizer`:** Moved `humanizer` (`blader/humanizer`) out of `develop/` into `copywriting/`.
+- **`scripts/setup.sh`:** Updated bootstrap routines to manage 13 external repositories across all three pillars.
+- **`scripts/build-registry.sh`:** Updated scanner to discover 5 develop, 6 design, and 2 copywriting plugins, producing schema v3 output.
+- **`/jarvis-update`:** Expanded update loop to sync all 13 repositories and update `JARVIS_MEMORY.md` version tables.
+- **Internal Humanizer References:** Updated `/jarvis-understand`, `/jarvis-plan`, `/jarvis-review`, `jarvis-analyzer`, and `jarvis-planner` to route embedded humanizer calls to `copywriting/humanizer`.
+- **Codebase Knowledge Graph:** Refreshed `.jarvis/CONTEXT.md` knowledge graph and module dependency map via `/jarvis-understand`.
+- **`JARVIS_MEMORY.md` & `rules/`:** Codified copywriting and translationese standards, updated plugin version logs, and documented the three-pillar routing map.
+
+---
+
 ## [0.2.0] - 2026-10-25
 
 ### Added

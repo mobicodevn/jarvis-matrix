@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# build-registry.sh — Scans develop and design plugins and builds registry.json
-# Usage: ./build-registry.sh <develop-root-path> [design-root-path] [output-path]
+# build-registry.sh — Scans develop, design, and copywriting plugins and builds registry.json
+# Usage: ./build-registry.sh <develop-root-path> [design-root-path] [copywriting-root-path] [output-path]
 #
 # Output: JSON written to <plugin-root>/config/registry.json (or output-path)
 # Exit codes: 0=success, 1=no plugins found, 2=bad arguments
@@ -14,10 +14,11 @@ PLUGIN_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 DEVELOP_PATH="${1:-}"
 arg2="${2:-}"
 arg3="${3:-}"
+arg4="${4:-}"
 
 if [[ -z "$DEVELOP_PATH" ]]; then
   echo "[build-registry] ERROR: develop plugins root path required as first argument" >&2
-  echo "  Usage: $0 <develop-root-path> [design-root-path] [output-path]" >&2
+  echo "  Usage: $0 <develop-root-path> [design-root-path] [copywriting-root-path] [output-path]" >&2
   exit 2
 fi
 
@@ -28,29 +29,37 @@ fi
 
 DEVELOP_PATH="$(cd "$DEVELOP_PATH" && pwd)"
 DESIGN_PATH=""
+COPYWRITING_PATH=""
 OUTPUT_PATH="$PLUGIN_ROOT/config/registry.json"
 
+# Argument resolution with backward-compatibility for .json output paths
 if [[ -n "$arg2" ]]; then
   if [[ "$arg2" == *.json ]]; then
     OUTPUT_PATH="$arg2"
   else
-    if [[ -d "$arg2" ]]; then
-      DESIGN_PATH="$(cd "$arg2" && pwd)"
-    else
-      DESIGN_PATH="$arg2"
-    fi
-    if [[ -n "$arg3" ]]; then
-      OUTPUT_PATH="$arg3"
-    fi
+    [[ -d "$arg2" ]] && DESIGN_PATH="$(cd "$arg2" && pwd)" || DESIGN_PATH="$arg2"
   fi
+fi
+
+if [[ -n "$arg3" ]]; then
+  if [[ "$arg3" == *.json ]]; then
+    OUTPUT_PATH="$arg3"
+  else
+    [[ -d "$arg3" ]] && COPYWRITING_PATH="$(cd "$arg3" && pwd)" || COPYWRITING_PATH="$arg3"
+  fi
+fi
+
+if [[ -n "$arg4" ]]; then
+  OUTPUT_PATH="$arg4"
 fi
 
 NOW="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
-echo "[build-registry] Scanning develop pillar: $DEVELOP_PATH" >&2
-[[ -n "$DESIGN_PATH" ]] && echo "[build-registry] Scanning design pillar:  $DESIGN_PATH" >&2
+echo "[build-registry] Scanning develop pillar:     $DEVELOP_PATH" >&2
+[[ -n "$DESIGN_PATH" ]] && echo "[build-registry] Scanning design pillar:      $DESIGN_PATH" >&2
+[[ -n "$COPYWRITING_PATH" ]] && echo "[build-registry] Scanning copywriting pillar: $COPYWRITING_PATH" >&2
 
-# Helper: extract a string value from plugin.json
+# Helper: extract a string value from JSON file
 get_json_field() {
   local file="$1" field="$2"
   if [[ -f "$file" ]]; then
@@ -145,21 +154,6 @@ else
   echo "[build-registry] ⚠ $GR_KEY not found at $GR_DIR" >&2
 fi
 
-# ── humanizer ───────────────────────────────────────────────────────
-HU_DIR="$DEVELOP_PATH/humanizer"
-HU_KEY="humanizer"
-HU_REL="humanizer"
-if [[ -f "$HU_DIR/SKILL.md" ]]; then
-  version="$(get_json_field "$HU_DIR/plugin.json" "version")"
-  [[ -z "$version" ]] && version="$(get_json_field "$HU_DIR/.claude-plugin/plugin.json" "version")"
-  [[ -z "$version" ]] && version="$(get_json_field "$HU_DIR/package.json" "version")"
-  plugins_json+="\"$HU_KEY\":{\"path\":\"$HU_REL\",\"type\":\"skill-only\",\"version\":\"$version\",\"skills\":[{\"name\":\"humanizer\",\"path\":\"$HU_REL/SKILL.md\"}],\"agents\":[],\"invocation\":\"embedded-mode\"},"
-  echo "[build-registry] ✓ $HU_KEY" >&2
-  ((found_count++))
-else
-  echo "[build-registry] ⚠ $HU_KEY not found at $HU_DIR" >&2
-fi
-
 # ── ponytail ────────────────────────────────────────────────────────
 PT_DIR="$DEVELOP_PATH/ponytail"
 PT_KEY="ponytail"
@@ -225,7 +219,6 @@ if [[ -n "$DESIGN_PATH" && -d "$DESIGN_PATH" ]]; then
   if [[ -d "$IMP_DIR" ]]; then
     version="$(get_json_field "$IMP_DIR/plugin.json" "version")"
     [[ -z "$version" ]] && version="$(get_json_field "$IMP_DIR/package.json" "version")"
-    # Find canonical skill path
     imp_skill_path=""
     if [[ -f "$IMP_DIR/.gemini/skills/impeccable/SKILL.md" ]]; then
       imp_skill_path="$IMP_REL/.gemini/skills/impeccable/SKILL.md"
@@ -290,7 +283,6 @@ if [[ -n "$DESIGN_PATH" && -d "$DESIGN_PATH" ]]; then
     version="$(get_json_field "$UIX_DIR/package.json" "version")"
     uix_skills="[]"
     if [[ -d "$UIX_DIR/.claude/skills" ]]; then
-      # Scan .claude/skills
       uix_skills="["
       first=true
       while IFS= read -r -d '' skill_dir; do
@@ -311,11 +303,94 @@ if [[ -n "$DESIGN_PATH" && -d "$DESIGN_PATH" ]]; then
     echo "[build-registry] ⚠ $UIX_KEY not found at $UIX_DIR" >&2
   fi
 
+  # ── hyperframes ───────────────────────────────────────────────────
+  HYP_DIR="$DESIGN_PATH/hyperframes"
+  HYP_KEY="hyperframes"
+  HYP_REL="hyperframes"
+  if [[ -d "$HYP_DIR/.agents/skills" ]]; then
+    version="1.0.0"
+    hyp_skills="["
+    first=true
+    while IFS= read -r -d '' skill_dir; do
+      skill_name="$(basename "$skill_dir")"
+      if [[ -f "$skill_dir/SKILL.md" ]]; then
+        rel_path="$HYP_REL/.agents/skills/$skill_name/SKILL.md"
+        [[ "$first" == "true" ]] || hyp_skills+=","
+        hyp_skills+="{\"name\":\"$skill_name\",\"path\":\"$rel_path\"}"
+        first=false
+      fi
+    done < <(find "$HYP_DIR/.agents/skills" -mindepth 1 -maxdepth 1 -type d -print0 | sort -z)
+    hyp_skills+="]"
+    design_plugins_json+="\"$HYP_KEY\":{\"path\":\"$HYP_REL\",\"type\":\"skill-collection\",\"version\":\"$version\",\"skills\":$hyp_skills,\"agents\":[]},"
+    echo "[build-registry] ✓ $HYP_KEY" >&2
+    ((design_found_count++))
+  else
+    echo "[build-registry] ⚠ $HYP_KEY not found at $HYP_DIR" >&2
+  fi
+
+  # ── logo-design-skill ─────────────────────────────────────────────
+  LOG_DIR="$DESIGN_PATH/logo-design-skill"
+  LOG_KEY="logo-design-skill"
+  LOG_REL="logo-design-skill"
+  if [[ -d "$LOG_DIR/skills" ]]; then
+    version="$(get_json_field "$LOG_DIR/.claude-plugin/plugin.json" "version")"
+    [[ -z "$version" ]] && version="1.0.0"
+    skills="$(scan_skills "$LOG_DIR/skills" "$LOG_REL")"
+    design_plugins_json+="\"$LOG_KEY\":{\"path\":\"$LOG_REL\",\"type\":\"single-skill\",\"version\":\"$version\",\"skills\":$skills,\"agents\":[]},"
+    echo "[build-registry] ✓ $LOG_KEY" >&2
+    ((design_found_count++))
+  else
+    echo "[build-registry] ⚠ $LOG_KEY not found at $LOG_DIR" >&2
+  fi
+
   design_plugins_json="${design_plugins_json%,}"
 fi
 
+# ══════════════════════════════════════════════════════════════════════
+# COPYWRITING PILLAR
+# ══════════════════════════════════════════════════════════════════════
+
+copywriting_plugins_json=""
+copywriting_found_count=0
+
+if [[ -n "$COPYWRITING_PATH" && -d "$COPYWRITING_PATH" ]]; then
+  # ── humanizer ───────────────────────────────────────────────────────
+  HU_DIR="$COPYWRITING_PATH/humanizer"
+  HU_KEY="humanizer"
+  HU_REL="humanizer"
+  if [[ -f "$HU_DIR/SKILL.md" ]]; then
+    version="$(get_json_field "$HU_DIR/plugin.json" "version")"
+    [[ -z "$version" ]] && version="$(get_json_field "$HU_DIR/.claude-plugin/plugin.json" "version")"
+    [[ -z "$version" ]] && version="$(get_json_field "$HU_DIR/package.json" "version")"
+    [[ -z "$version" ]] && version="3.1.0"
+    copywriting_plugins_json+="\"$HU_KEY\":{\"path\":\"$HU_REL\",\"type\":\"skill-only\",\"version\":\"$version\",\"skills\":[{\"name\":\"humanizer\",\"path\":\"$HU_REL/SKILL.md\"}],\"agents\":[],\"invocation\":\"embedded-mode\"},"
+    echo "[build-registry] ✓ $HU_KEY (copywriting)" >&2
+    ((copywriting_found_count++))
+  else
+    echo "[build-registry] ⚠ $HU_KEY not found at $HU_DIR" >&2
+  fi
+
+  # ── vietnamese-humanizer ───────────────────────────────────────────
+  VNH_DIR="$COPYWRITING_PATH/vietnamese-humanizer"
+  VNH_KEY="vietnamese-humanizer"
+  VNH_REL="vietnamese-humanizer"
+  if [[ -d "$VNH_DIR/skills" ]]; then
+    version="$(grep -m1 'version' "$VNH_DIR/pyproject.toml" 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' || echo "0.4.6")"
+    skills="$(scan_skills "$VNH_DIR/skills" "$VNH_REL")"
+    copywriting_plugins_json+="\"$VNH_KEY\":{\"path\":\"$VNH_REL\",\"type\":\"skill-collection\",\"version\":\"$version\",\"skills\":$skills,\"agents\":[]},"
+    echo "[build-registry] ✓ $VNH_KEY (copywriting)" >&2
+    ((copywriting_found_count++))
+  else
+    echo "[build-registry] ⚠ $VNH_KEY not found at $VNH_DIR" >&2
+  fi
+
+  copywriting_plugins_json="${copywriting_plugins_json%,}"
+fi
+
 # ── Assemble Output JSON ─────────────────────────────────────────────
-if [[ -n "$DESIGN_PATH" ]]; then
+if [[ -n "$COPYWRITING_PATH" ]]; then
+  OUTPUT="{\"version\":3,\"plugins_root\":\"$DEVELOP_PATH\",\"design_plugins_root\":\"$DESIGN_PATH\",\"copywriting_plugins_root\":\"$COPYWRITING_PATH\",\"last_indexed\":\"$NOW\",\"plugins\":{$plugins_json},\"design_plugins\":{$design_plugins_json},\"copywriting_plugins\":{$copywriting_plugins_json}}"
+elif [[ -n "$DESIGN_PATH" ]]; then
   OUTPUT="{\"version\":2,\"plugins_root\":\"$DEVELOP_PATH\",\"design_plugins_root\":\"$DESIGN_PATH\",\"last_indexed\":\"$NOW\",\"plugins\":{$plugins_json},\"design_plugins\":{$design_plugins_json}}"
 else
   OUTPUT="{\"version\":1,\"plugins_root\":\"$DEVELOP_PATH\",\"last_indexed\":\"$NOW\",\"plugins\":{$plugins_json}}"
@@ -323,7 +398,7 @@ fi
 
 mkdir -p "$(dirname "$OUTPUT_PATH")"
 if echo "$OUTPUT" | python3 -m json.tool > "$OUTPUT_PATH" 2>/dev/null; then
-  echo "[build-registry] ✓ Registry (v$([[ -n "$DESIGN_PATH" ]] && echo 2 || echo 1)) written to $OUTPUT_PATH ($found_count develop plugins, $design_found_count design plugins)" >&2
+  echo "[build-registry] ✓ Registry (v$([[ -n "$COPYWRITING_PATH" ]] && echo 3 || { [[ -n "$DESIGN_PATH" ]] && echo 2 || echo 1; })) written to $OUTPUT_PATH ($found_count develop, $design_found_count design, $copywriting_found_count copywriting plugins)" >&2
   exit 0
 else
   echo "[build-registry] ERROR: Failed to produce valid JSON" >&2

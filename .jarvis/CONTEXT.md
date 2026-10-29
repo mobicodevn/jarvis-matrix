@@ -1,19 +1,20 @@
 ---
 type: jarvis-project-context
-version: 2
+version: 3
 project: "jarvis-matrix"
 project_root: "/Users/kietnguyen/.gemini/config/plugins/jarvis-matrix"
 created: "2026-10-24T20:38:00+07:00"
-last_analyzed: "2026-10-25T09:47:00+07:00"
-analysis_hash: "v0.2.0-dual-pillar-design"
-cache_key: "jarvis-matrix-v0.2.0"
+last_analyzed: "2026-10-29T09:18:00+07:00"
+analysis_hash: "v0.3.0-three-pillars-copywriting"
+cache_key: "jarvis-matrix-v0.3.0"
 linked_memory:
   global: "[[~/.gemini/config/plugins/jarvis-matrix/JARVIS_MEMORY.md]]"
   project: "[[PROJECT_MEMORY.md]]"
 source_tools:
   - understand-anything
   - graphify
-tags: [context, architecture, graph, v0.2.0]
+  - humanizer
+tags: [context, architecture, graph, v0.3.0, three-pillars]
 ---
 
 # Project Context: jarvis-matrix
@@ -23,11 +24,11 @@ tags: [context, architecture, graph, v0.2.0]
 
 ## Architecture Summary
 
-Jarvis-Matrix is a central multi-agent orchestrator that sits between a human developer (working in Antigravity, Cursor, Claude Code, or Codex) and a library of ten specialized plugins organized into two distinct pillars: **Engineering (`develop/`)** and **UI/UX & Motion (`design/`)**.
+Jarvis-Matrix is a central multi-agent orchestrator that connects modern AI coding environments (Antigravity IDE, Cursor, Claude Code, Codex) to a modular library of 13 specialized plugins organized into three distinct architectural pillars: **Engineering (`develop/`)**, **UI/UX & Motion (`design/`)**, and **Language & Humanizing (`copywriting/`)**.
 
-The project contains no runtime application framework code. Every file is either a markdown skill definition, a markdown agent definition, an infrastructure shell script, a JSON configuration/schema file, or a template. The actual capabilities come from the external plugin library at `~/.gemini/config/github-plugins/` — Jarvis routes to that library dynamically but never duplicates or rewrites it (No-Rewrite Rule).
+The repository contains no runtime application framework. Every file serves as a canonical markdown skill definition, sub-agent specification, infrastructure automation script, or JSON schema. External repositories located in `~/.gemini/config/github-plugins/` supply raw capabilities, which Jarvis routes to dynamically without duplicating or modifying external code (No-Rewrite Rule).
 
-In v0.2.0, the **Design Pillar** was introduced alongside `/jarvis-design` and a 6-agent design fleet mirrored from `apex-design` with the strict "design" keyword naming convention (`jarvis-design-...`). Sub-agents operate under Zero-Bloat Context Isolation, loading only single relevant SKILL.md slices. Setup is automated via `scripts/setup.sh`, eliminating `/jarvis-setup`.
+v0.3.0 establishes the **Copywriting Pillar** by relocating `humanizer` from `develop/` into `copywriting/` and introducing `vietnamese-humanizer`. It adds the master copywriting agent `jarvis-writer` with intelligent language detection and auto-routing alongside dedicated slash commands `/jarvis-writer-vi` and `/jarvis-writer-en`. Simultaneously, the **Design Pillar** expands to six repositories with the integration of `hyperframes` (video changelogs & captions overlays) and `logo-design-skill` (vector branding & mark design) into `/jarvis-design` and its specialized design sub-agents.
 
 ## File & Module Graph
 
@@ -35,34 +36,36 @@ In v0.2.0, the **Design Pillar** was introduced alongside `/jarvis-design` and a
 
 | Module | Path | Role | Files |
 |--------|------|------|-------|
-| **Skills** | `skills/` | Slash-command skill definitions (11 total) | 11 SKILL.md files |
-| **Agents** | `agents/` | Sub-agent role definitions (11 total: 5 develop + 6 design) | 11 .md files |
-| **Scripts** | `scripts/` | Shell infrastructure scripts (4 total: `setup.sh`, `build-registry.sh`, `sync-adapters.sh`, `cache-manager.sh`) | 4 .sh files |
-| **Config** | `config/` | Registry, schema, and config | 3 JSON files |
+| **Skills** | `skills/` | Slash-command skill definitions (14 total) | 14 SKILL.md files |
+| **Agents** | `agents/` | Sub-agent role definitions (12 total: 5 develop + 6 design + 1 copywriting) | 12 .md files |
+| **Scripts** | `scripts/` | Shell infrastructure scripts (`setup.sh`, `build-registry.sh`, `sync-adapters.sh`, `cache-manager.sh`) | 4 .sh files |
+| **Config** | `config/` | Registry (v3), schema (v3), and configuration (v0.3.0) | 3 JSON files |
 | **Templates** | `templates/` | Document generation templates | 3 .md files |
 | **Rules** | `rules/` | Always-on routing and sub-agent rules | 2 .md files |
-| **Adapters** | `adapters/` | IDE-specific generated bindings (Cursor, Claude Code, Codex) | 51 generated files across 3 IDEs |
+| **Adapters** | `adapters/` | IDE-specific generated bindings (Cursor, Claude Code, Codex) | 60 generated files across 3 IDEs |
 | **Root** | `/` | Plugin metadata, README, CHANGELOG, license | 4 files |
 
 ### Dependency Map
 
 | Source | Target | Relation | Confidence |
 |--------|--------|----------|------------|
-| `skills/*` | `config/registry.json` | reads (skill path lookup) | high |
+| `skills/*` | `config/registry.json` | reads (skill path lookup across 3 pillars) | high |
 | `skills/*` | `JARVIS_MEMORY.md` | reads (mandatory memory sync) | high |
 | `skills/*` | `.jarvis/PROJECT_MEMORY.md` | reads/writes (project state) | high |
 | `skills/*` | `.jarvis/CONTEXT.md` | reads/writes (project architecture) | high |
-| `scripts/setup.sh` | `scripts/build-registry.sh` | invokes (registry generation) | high |
+| `scripts/setup.sh` | `scripts/build-registry.sh` | invokes (registry generation v3) | high |
 | `scripts/setup.sh` | `scripts/sync-adapters.sh` | invokes (adapter generation) | high |
+| `skills/jarvis-writer` | `agents/jarvis-writer.md` | dispatches (master copywriting agent) | high |
+| `skills/jarvis-writer` | `skills/jarvis-writer-vi` & `skills/jarvis-writer-en` | delegates (language-specific humanizers) | high |
 | `skills/jarvis-understand` | `scripts/cache-manager.sh` | invokes (cache check/store) | high |
-| `skills/jarvis-update` | `scripts/build-registry.sh` | invokes (registry rebuild) | high |
+| `skills/jarvis-update` | `scripts/build-registry.sh` | invokes (3-pillar registry rebuild) | high |
 | `skills/jarvis-update` | `scripts/sync-adapters.sh` | invokes (adapter regen) | high |
 | `skills/jarvis-plan` | `agents/jarvis-planner.md` | dispatches (sub-agent) | high |
 | `skills/jarvis-build` | `agents/jarvis-builder.md` | dispatches (parallel, per wave) | high |
 | `skills/jarvis-design` | `agents/jarvis-designer.md` | dispatches (master design orchestrator) | high |
 | `agents/jarvis-designer.md` | `agents/jarvis-design-*.md` | dispatches (sequential & parallel streams) | high |
 | `agents/*` | `config/registry.json` | reads (external plugin lookup) | high |
-| `scripts/build-registry.sh` | external plugins (`develop/` & `design/`) | scans (skill/agent discovery) | high |
+| `scripts/build-registry.sh` | external plugins (`develop/`, `design/`, `copywriting/`) | scans (13 repos discovery) | high |
 | `scripts/sync-adapters.sh` | `skills/*/SKILL.md` + `agents/jarvis-design*.md` | reads (frontmatter extraction) | high |
 | `rules/AGENTS.md` | all `skills/*` and `agents/*` | governs (mandatory routing rules) | high |
 | `rules/jarvis-routing.md` | all `skills/*` and `agents/*` | governs (detailed routing logic) | high |
@@ -72,11 +75,14 @@ In v0.2.0, the **Design Pillar** was introduced alongside `/jarvis-design` and a
 ### Skills (Slash Commands)
 | Symbol | File | Purpose |
 |--------|------|---------|
-| `/jarvis-design` | [`skills/jarvis-design/SKILL.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/skills/jarvis-design/SKILL.md) | Dual-mode UI/UX design & motion engineering |
+| `/jarvis-writer` | [`skills/jarvis-writer/SKILL.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/skills/jarvis-writer/SKILL.md) | Master router auto-detecting language and humanizing prose |
+| `/jarvis-writer-vi` | [`skills/jarvis-writer-vi/SKILL.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/skills/jarvis-writer-vi/SKILL.md) | Dedicated Vietnamese humanized writer & translationese cleaner |
+| `/jarvis-writer-en` | [`skills/jarvis-writer-en/SKILL.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/skills/jarvis-writer-en/SKILL.md) | Dedicated English humanized writer & AI tell stripper |
+| `/jarvis-design` | [`skills/jarvis-design/SKILL.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/skills/jarvis-design/SKILL.md) | Dual-mode UI/UX design, branding, motion & frame synthesis |
 | `/jarvis-understand` | [`skills/jarvis-understand/SKILL.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/skills/jarvis-understand/SKILL.md) | Deep project analysis → CONTEXT.md |
 | `/jarvis-context` | [`skills/jarvis-context/SKILL.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/skills/jarvis-context/SKILL.md) | Load context into session |
 | `/jarvis-refresh` | [`skills/jarvis-refresh/SKILL.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/skills/jarvis-refresh/SKILL.md) | Incremental context update |
-| `/jarvis-update` | [`skills/jarvis-update/SKILL.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/skills/jarvis-update/SKILL.md) | Pull all 10 plugin repos |
+| `/jarvis-update` | [`skills/jarvis-update/SKILL.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/skills/jarvis-update/SKILL.md) | Pull all 13 plugin repos across 3 pillars |
 | `/jarvis-spec` | [`skills/jarvis-spec/SKILL.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/skills/jarvis-spec/SKILL.md) | Spec-before-code interview (≥95% confidence) |
 | `/jarvis-plan` | [`skills/jarvis-plan/SKILL.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/skills/jarvis-plan/SKILL.md) | Decompose spec → atomic task DAG |
 | `/jarvis-build` | [`skills/jarvis-build/SKILL.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/skills/jarvis-build/SKILL.md) | Multi-agent parallel execution |
@@ -87,11 +93,12 @@ In v0.2.0, the **Design Pillar** was introduced alongside `/jarvis-design` and a
 ### Sub-Agents
 | Symbol | File | Pillar | Role |
 |--------|------|--------|------|
+| `jarvis-writer` | [`agents/jarvis-writer.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/agents/jarvis-writer.md) | Copywriting | Master language-detection & copywriting coordinator |
 | `jarvis-designer` | [`agents/jarvis-designer.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/agents/jarvis-designer.md) | Design | Master design pipeline orchestrator |
 | `jarvis-design-interrogator` | [`agents/jarvis-design-interrogator.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/agents/jarvis-design-interrogator.md) | Design | Requirement scoring (≥95% clarity gate) |
 | `jarvis-design-architect` | [`agents/jarvis-design-architect.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/agents/jarvis-design-architect.md) | Design | Claim-driven information architecture |
-| `jarvis-design-taste-director` | [`agents/jarvis-design-taste-director.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/agents/jarvis-design-taste-director.md) | Design | Art direction & 10-point anti-slop |
-| `jarvis-design-motion-engineer`| [`agents/jarvis-design-motion-engineer.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/agents/jarvis-design-motion-engineer.md) | Design | Emil Kowalski spring physics & timing budgets |
+| `jarvis-design-taste-director` | [`agents/jarvis-design-taste-director.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/agents/jarvis-design-taste-director.md) | Design | Art direction, anti-slop & logo/mark crafting |
+| `jarvis-design-motion-engineer`| [`agents/jarvis-design-motion-engineer.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/agents/jarvis-design-motion-engineer.md) | Design | Kowalski springs & hyperframes video overlays |
 | `jarvis-design-executor` | [`agents/jarvis-design-executor.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/agents/jarvis-design-executor.md) | Design | Impeccable production code synthesizer |
 | `jarvis-analyzer` | [`agents/jarvis-analyzer.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/agents/jarvis-analyzer.md) | Develop | UA + graphify pipeline orchestration |
 | `jarvis-builder` | [`agents/jarvis-builder.md`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/agents/jarvis-builder.md) | Develop | Single-task implementation |
@@ -102,9 +109,9 @@ In v0.2.0, the **Design Pillar** was introduced alongside `/jarvis-design` and a
 ### Infrastructure Scripts
 | Symbol | File | Purpose |
 |--------|------|---------|
-| `setup.sh` | [`scripts/setup.sh`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/scripts/setup.sh) | Automated zero-config bootstrap (10 repos) |
-| `build-registry.sh` | [`scripts/build-registry.sh`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/scripts/build-registry.sh) | Dual-pillar scanning → schema v2 registry.json |
-| `sync-adapters.sh` | [`scripts/sync-adapters.sh`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/scripts/sync-adapters.sh) | Generate IDE adapter bindings for skills and design sub-agents |
+| `setup.sh` | [`scripts/setup.sh`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/scripts/setup.sh) | Automated zero-config bootstrap (13 repos across 3 pillars) |
+| `build-registry.sh` | [`scripts/build-registry.sh`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/scripts/build-registry.sh) | Three-pillar scanning → schema v3 registry.json |
+| `sync-adapters.sh` | [`scripts/sync-adapters.sh`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/scripts/sync-adapters.sh) | Generate IDE adapter bindings (60 files across 3 IDEs) |
 | `cache-manager.sh` | [`scripts/cache-manager.sh`](file:///Users/kietnguyen/.gemini/config/plugins/jarvis-matrix/scripts/cache-manager.sh) | CONTEXT.md cross-workspace cache ops |
 
 ## Community Clusters
@@ -114,23 +121,28 @@ In v0.2.0, the **Design Pillar** was introduced alongside `/jarvis-design` and a
 - Supported by agents: `jarvis-planner`, `jarvis-builder`, `jarvis-compressor`, `jarvis-reviewer`
 - External plugins: `agent-skills`, `ponytail`, `caveman`
 
-### Cluster 2: Design Engineering & Motion Pipeline (v0.2.0)
+### Cluster 2: Design Engineering & Motion Pipeline (Expanded v0.3.0)
 - `/jarvis-design` master skill
 - Coordinated by: `jarvis-designer`
 - Specialized sub-agents: `jarvis-design-interrogator`, `jarvis-design-architect`, `jarvis-design-taste-director`, `jarvis-design-motion-engineer`, `jarvis-design-executor`
-- External plugins: `impeccable`, `skills`, `taste-skill`, `ui-ux-pro-max-skill`
+- External plugins: `impeccable`, `skills`, `taste-skill`, `ui-ux-pro-max-skill`, `hyperframes`, `logo-design-skill`
 
-### Cluster 3: Project Analysis & Context
+### Cluster 3: Copywriting & Language Humanizing Pipeline (New v0.3.0)
+- `/jarvis-writer` (Master Language Router) → `/jarvis-writer-vi` & `/jarvis-writer-en`
+- Supported by agent: `jarvis-writer`
+- External plugins: `humanizer`, `vietnamese-humanizer`
+
+### Cluster 4: Project Analysis & Context
 - `/jarvis-understand` → `/jarvis-context` → `/jarvis-refresh`
 - Supported by agent: `jarvis-analyzer`
-- External plugins: `understand-anything`, `graphify`, `humanizer`
+- External plugins: `understand-anything`, `graphify`, `humanizer` (copywriting pillar)
 - Infrastructure: `cache-manager.sh`
 
-### Cluster 4: Memory Management
+### Cluster 5: Memory Management
 - `/jarvis-memory` (global) + `/jarvis-project-memory` (project-scoped)
 - Three brain files: `JARVIS_MEMORY.md`, `CONTEXT.md`, `PROJECT_MEMORY.md`
 
-### Cluster 5: Infrastructure & Automation
+### Cluster 6: Infrastructure & Automation
 - `setup.sh` → `build-registry.sh` → `sync-adapters.sh` → `/jarvis-update`
-- Config: `registry.json` (schema v2), `registry.schema.json`, `jarvis.config.json`
-- Adapters: 51 generated files across Cursor, Claude Code, Codex
+- Config: `registry.json` (schema v3), `registry.schema.json`, `jarvis.config.json`
+- Adapters: 60 generated files across Cursor, Claude Code, Codex

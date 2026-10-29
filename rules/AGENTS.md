@@ -26,7 +26,7 @@ Do NOT load all skills at startup. Follow this sequence on every invocation:
 3. Read only the exact SKILL.md files needed — nothing more
 4. Inject those files into sub-agent context alongside the task
 
-**Rationale:** Ten plugins across develop and design pillars with dozens of skills would consume thousands of tokens if pre-loaded.
+**Rationale:** Thirteen plugins across develop, design, and copywriting pillars with dozens of skills would consume thousands of tokens if pre-loaded.
 
 ### 3. Compression Decision Matrix
 
@@ -38,6 +38,7 @@ Apply compression levels as follows:
 | `/jarvis-plan` | ponytail-lite | > 20 tasks | ponytail-full |
 | `/jarvis-build` | ponytail-full + caveman | > 3 files per task | ponytail-ultra + ultracave |
 | `/jarvis-design` | ponytail-lite | > 5 components | ponytail-full |
+| `/jarvis-writer*` | **None** | — | None |
 | `/jarvis-review` | ponytail-lite | — | ponytail-full |
 | `/jarvis-understand` | ponytail-full | > 500 files | ponytail-ultra + caveman |
 | Sub-agent communications | caveman (always) | — | ultracave |
@@ -54,14 +55,14 @@ When dispatching sub-agents for a plan:
 
 ### 5. Design Sub-Agent Fleet & Zero-Bloat Isolation
 
-When handling UI/UX, styling, or animation tasks under `/jarvis-design`:
+When handling UI/UX, styling, branding, or animation tasks under `/jarvis-design`:
 
 1. **Strict "design" Keyword Naming Rule:**
-   All design sub-agents must contain the keyword `design` to eliminate any confusion with `develop` skills:
+   All design sub-agents must contain the keyword `design` to eliminate any confusion with `develop` or `copywriting` skills:
    - `jarvis-design-interrogator`: Requirement clarification (≥95% gate)
    - `jarvis-design-architect`: Information architecture & layout grid
-   - `jarvis-design-taste-director`: Art direction & 10-point Anti-Slop checklist
-   - `jarvis-design-motion-engineer`: Emil Kowalski spring physics & timing budgets
+   - `jarvis-design-taste-director`: Art direction, anti-slop checklist & logo/brand marks
+   - `jarvis-design-motion-engineer`: Emil Kowalski spring physics, duration budgets & hyperframes overlays
    - `jarvis-design-executor`: Impeccable production code synthesizer
    - `jarvis-designer`: Master pipeline coordinator
    - *Note: `apex-update` is explicitly excluded and omitted.*
@@ -69,8 +70,8 @@ When handling UI/UX, styling, or animation tasks under `/jarvis-design`:
 2. **Zero-Bloat Context Isolation:**
    Sub-agents must NEVER load the entire `github-plugins/design/` directory. Each sub-agent is strictly restricted to its specific assigned SKILL.md slice.
 
-3. **Mandatory 4-Repo Ensemble Rule:**
-   The design pipeline MUST evaluate perspectives across all 4 design repositories (`impeccable`, `skills`, `taste-skill`, `ui-ux-pro-max-skill`). Skipping any repo is a routing violation.
+3. **Design Ensemble Evaluation Rule:**
+   The design pipeline evaluates perspectives across all 6 design repositories (`impeccable`, `skills`, `taste-skill`, `ui-ux-pro-max-skill`, `hyperframes`, `logo-design-skill`).
 
 4. **Parallel vs. Sequential Dispatch:**
    - Interrogation gate is strictly sequential (≥ 95% clarity required before downstream dispatch).
@@ -78,7 +79,20 @@ When handling UI/UX, styling, or animation tasks under `/jarvis-design`:
    - Code synthesis (`jarvis-design-executor`) runs after receiving tokens and layout.
    - Quality critique runs sequentially post-synthesis.
 
-### 6. Never Rewrite Plugins
+### 6. Copywriting Pillar & Language Routing Protocol
+
+When executing copywriting, translation, or text polishing under `/jarvis-writer*`:
+
+1. **Intelligent Language Routing:**
+   - `/jarvis-writer` autonomously detects whether input is Vietnamese or English via script diacritics and keyword heuristics.
+   - Vietnamese content routes to `jarvis-writer-vi` (`github-plugins/copywriting/vietnamese-humanizer`).
+   - English content routes to `jarvis-writer-en` (`github-plugins/copywriting/humanizer`).
+2. **Absolute Preservation:**
+   - Never alter technical identifiers, facts, numbers, dates, or code blocks.
+3. **Tone & Memory Binding:**
+   - Respect tone and audience register rules defined in `[[JARVIS_MEMORY.md]]` and `[[PROJECT_MEMORY.md]]`.
+
+### 7. Never Rewrite Plugins
 
 Jarvis-Matrix routes to plugins. It does NOT rewrite them.
 
@@ -86,14 +100,14 @@ Jarvis-Matrix routes to plugins. It does NOT rewrite them.
 - Invoke them by reading their SKILL.md files and delegating dynamically
 - Treat each plugin's SKILL.md as authoritative
 
-### 7. Registry Fallback
+### 8. Registry Fallback
 
 If `config/registry.json` does not exist:
 1. Warn the user: "Registry not found. Run `bash scripts/setup.sh` to initialize."
 2. Do not attempt to invoke any plugin
 3. Stop and wait for setup
 
-### 8. WikiLink Maintenance
+### 9. WikiLink Maintenance
 
 Every write to any brain file (JARVIS_MEMORY.md, CONTEXT.md, PROJECT_MEMORY.md) MUST:
 - Preserve all existing `[[WikiLinks]]`
@@ -114,7 +128,10 @@ Every write to any brain file (JARVIS_MEMORY.md, CONTEXT.md, PROJECT_MEMORY.md) 
 | Create an implementation plan | `/jarvis-plan` | ponytail, caveman, agent-skills, humanizer |
 | Execute the plan | `/jarvis-build start` | ponytail, caveman, agent-skills |
 | Stop current build | `/jarvis-build stop` | — |
-| Design UI/UX & animations | `/jarvis-design` | impeccable, skills, taste-skill, ui-ux-pro-max-skill |
+| Design UI/UX, branding & animations | `/jarvis-design` | impeccable, skills, taste-skill, ui-ux-pro-max-skill, hyperframes, logo-design-skill |
+| Write/humanize (auto-detect language) | `/jarvis-writer` | humanizer, vietnamese-humanizer |
+| Write/humanize Vietnamese | `/jarvis-writer-vi` | vietnamese-humanizer |
+| Write/humanize English | `/jarvis-writer-en` | humanizer |
 | Review code quality | `/jarvis-review` | agent-skills agents |
 | View/edit global memory | `/jarvis-memory` | — |
 | View/edit project memory | `/jarvis-project-memory` | — |

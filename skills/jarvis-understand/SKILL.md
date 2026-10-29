@@ -78,7 +78,7 @@ Fill `templates/CONTEXT.template.md` with the merged content.
 ### Step 7 — Humanizer Pass
 
 Pass the **Architecture Summary** section through `humanizer` in **embedded mode**:
-- Load `humanizer/SKILL.md` from registry
+- Load `humanizer/SKILL.md` from copywriting pillar in registry (`copywriting_plugins.humanizer`)
 - Remove AI writing tells: passive voice, forced triads, staged openers
 - Preserve all technical content
 

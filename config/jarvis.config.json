@@ -1,6 +1,7 @@
 {
   "plugins_root": "/Users/kietnguyen/.gemini/config/github-plugins/develop",
   "design_plugins_root": "/Users/kietnguyen/.gemini/config/github-plugins/design",
+  "copywriting_plugins_root": "/Users/kietnguyen/.gemini/config/github-plugins/copywriting",
   "detected_ides": [
     "antigravity",
     "cursor",
@@ -8,6 +9,6 @@
     "codex"
   ],
   "setup_completed": true,
-  "setup_date": "2026-10-25T09:41:00Z",
-  "version": "0.2.0"
+  "setup_date": "2026-10-29T09:10:00Z",
+  "version": "0.3.0"
 }

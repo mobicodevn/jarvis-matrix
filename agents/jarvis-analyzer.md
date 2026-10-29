@@ -65,7 +65,7 @@ Produces a `CONTEXT.md` file matching the schema in `templates/CONTEXT.template.
    - Deduplicate overlapping information
    - Fill CONTEXT.md template sections
 
-5. Pass Architecture Summary through humanizer (embedded mode):
+5. Pass Architecture Summary through humanizer (embedded mode from copywriting pillar):
    - Remove AI writing tells, passive voice, forced structure
    - Preserve all technical content
 

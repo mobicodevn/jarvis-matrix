@@ -1,7 +1,7 @@
 # Jarvis-Matrix — Routing Reference & Decision Rules
 
 > Companion reference for Antigravity, Cursor, Claude Code, and Codex adapters.
-> Describes how the orchestrator evaluates user intents and maps them to external plugins across develop and design pillars.
+> Describes how the orchestrator evaluates user intents and maps them to external plugins across develop, design, and copywriting pillars.
 
 ---
 
@@ -19,7 +19,7 @@ User invokes /jarvis-* command
 │   └── Missing → warn + halt ("Run bash scripts/setup.sh")
 │
 ├── Step 3: Identify Required Plugins
-│   └── Consult registry.json for skill paths (develop and design pillars)
+│   └── Consult registry.json for skill paths (develop, design, and copywriting pillars)
 │
 ├── Step 4: Load Only Required Skills (Zero-Bloat Context Isolation)
 │   └── Read exact SKILL.md files → inject into context
@@ -47,12 +47,6 @@ User invokes /jarvis-* command
 - **Output:** `graphify-out/graph.json`, `GRAPH_REPORT.md`
 - **Used by:** `/jarvis-understand`, `/jarvis-refresh`
 
-#### humanizer
-- **Registry key:** `humanizer`
-- **Skill path:** `humanizer/SKILL.md`
-- **Invocation mode:** embedded (pass text, get back clean prose)
-- **Used by:** `/jarvis-understand` (summaries), `/jarvis-plan` (overview), `/jarvis-review` (report)
-
 #### ponytail
 - **Registry key:** `ponytail`
 - **Levels:** `lite`, `full`, `ultra`
@@ -70,7 +64,7 @@ User invokes /jarvis-* command
 
 ---
 
-### Pillar 2: UI/UX, Aesthetic & Motion Plugins (`design/`)
+### Pillar 2: UI/UX, Aesthetic, Branding & Motion Plugins (`design/`)
 
 #### impeccable
 - **Registry key:** `impeccable`
@@ -96,6 +90,38 @@ User invokes /jarvis-* command
 - **Capability:** 192 product categories, 79 UI styles, 34 landing page patterns, token architecture.
 - **Used by:** `/jarvis-design`, `jarvis-design-architect`, `jarvis-design-interrogator`
 
+#### hyperframes
+- **Registry key:** `hyperframes`
+- **Key skills:** `captions-overlay`, `changelog-video`
+- **Capability:** Frame composition, video changelog animations, synchronized text/captions overlays.
+- **Used by:** `/jarvis-design`, `jarvis-design-motion-engineer`
+
+#### logo-design-skill
+- **Registry key:** `logo-design-skill`
+- **Canonical skill:** `logo-design-skill/skills/logo-design/SKILL.md`
+- **Capability:** Vector logo marks, geometric SVG construction, responsive favicon scaling, brand lockups.
+- **Used by:** `/jarvis-design`, `jarvis-design-taste-director`, `jarvis-designer`
+
+---
+
+### Pillar 3: Copywriting & Language Plugins (`copywriting/`)
+
+#### humanizer
+- **Registry key:** `humanizer`
+- **Skill path:** `humanizer/SKILL.md`
+- **Invocation mode:** Direct or embedded (pass text, get back clean prose)
+- **Used by:** `/jarvis-writer`, `/jarvis-writer-en`, `/jarvis-understand` (summaries), `/jarvis-plan` (overview), `/jarvis-review` (report)
+
+#### vietnamese-humanizer
+- **Registry key:** `vietnamese-humanizer`
+- **Key skills:** `humanizer-vi`, `translationese-cleaner-vi`, `style-guide-vi`, `grammar-checker-vi`
+- **Capability:** Vietnamese natural tone calibration, translationese stripping, authentic vocabulary, grammar verification.
+- **Used by:** `/jarvis-writer`, `/jarvis-writer-vi`
+
+#### jarvis-writer (Master Agent)
+- **Agent file:** `agents/jarvis-writer.md`
+- **Capability:** Autonomous language detection (Vietnamese vs English) via script diacritics and explicit flag parsing, routing to `/jarvis-writer-vi` or `/jarvis-writer-en`.
+
 ---
 
 ## Design Sub-Agent Pipeline Routing Tree
@@ -112,8 +138,8 @@ User invokes /jarvis-* command
 │   └── Match product type to 1 of 192 UI/UX Pro Max categories
 │
 ├── Phase 3 & 4: Architecture & Parallel Design Synthesis
-│   ├── Parallel Stream A: jarvis-design-taste-director (Colors, typography, anti-slop)
-│   ├── Parallel Stream B: jarvis-design-motion-engineer (Springs, timing curves)
+│   ├── Parallel Stream A: jarvis-design-taste-director + logo-design-skill (Colors, typography, anti-slop, vector marks)
+│   ├── Parallel Stream B: jarvis-design-motion-engineer + hyperframes (Springs, timing curves, video frames)
 │   └── Structural Stream: jarvis-design-architect (Claim-driven IA & layout grid)
 │
 ├── Phase 5: Code Synthesis (jarvis-design-executor)
@@ -138,9 +164,13 @@ User invokes /jarvis-* command
 | `jarvis-design-taste-director` | **R** (banned patterns) | — | **RW** (tokens) |
 | `jarvis-design-motion-engineer`| **R** (timing preferences)| — | **RW** (motion) |
 | `jarvis-design-executor` | **R** | **R** | **RW** (decisions) |
+| `/jarvis-writer` | **R** | — | **RW** (glossary) |
+| `/jarvis-writer-vi` | **R** | — | **RW** (tone rules) |
+| `/jarvis-writer-en` | **R** | — | **RW** (brand voice) |
+| `jarvis-writer` (agent) | **R** | — | **RW** (language preferences) |
 | `/jarvis-understand` | R | **W** (create) | R |
 | `/jarvis-context` | **R** | **R** | **R** |
-| `/jarvis-update` | **RW** (versions x 10) | — | — |
+| `/jarvis-update` | **RW** (versions x 13) | — | — |
 | `/jarvis-refresh` | R | **RW** (delta) | **RW** (links) |
 | `/jarvis-spec` | **R** | **R** | **RW** (spec) |
 | `/jarvis-plan` | **R** | **R** | **RW** (plan) |
@@ -172,7 +202,7 @@ User invokes /jarvis-* command
 | Condition | Action |
 |-----------|--------|
 | Registry missing | Halt + suggest `bash scripts/setup.sh` |
-| Design plugin repo missing | Warn on stderr, skip that plugin, continue with remaining |
+| Design / Copywriting repo missing | Warn on stderr, skip that plugin, continue with remaining |
 | `/jarvis-design` called with zero design plugins | Error: "No design plugins found. Run `bash scripts/setup.sh`." |
 | Context bloat attempt (loading full repo) | Router blocks traversal; enforces single SKILL.md slice |
 | Requirement clarity < 95% | Block code generation; ask up to 5 targeted questions |

@@ -7,7 +7,7 @@
   "properties": {
     "version": {
       "type": "integer",
-      "description": "Registry schema version (1 for develop-only, 2 for develop + design)"
+      "description": "Registry schema version (1 for develop-only, 2 for develop + design, 3 for develop + design + copywriting)"
     },
     "plugins_root": {
       "type": "string",
@@ -16,6 +16,10 @@
     "design_plugins_root": {
       "type": "string",
       "description": "Absolute path to the design github-plugins directory"
+    },
+    "copywriting_plugins_root": {
+      "type": "string",
+      "description": "Absolute path to the copywriting github-plugins directory"
     },
     "last_indexed": {
       "type": "string",
@@ -32,6 +36,13 @@
     "design_plugins": {
       "type": "object",
       "description": "Map of design plugin-id to plugin metadata",
+      "additionalProperties": {
+        "$ref": "#/definitions/Plugin"
+      }
+    },
+    "copywriting_plugins": {
+      "type": "object",
+      "description": "Map of copywriting plugin-id to plugin metadata",
       "additionalProperties": {
         "$ref": "#/definitions/Plugin"
       }

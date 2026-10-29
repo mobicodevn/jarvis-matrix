@@ -78,7 +78,7 @@ status: pending
    - Wave 0: tasks with no dependencies
    - Wave N: tasks whose all dependencies are in earlier waves
 6. Write numbered `.md` files and `00-plan-overview.md`
-7. Pass overview through humanizer (embedded mode)
+7. Pass overview through humanizer (embedded mode from copywriting pillar)
 8. Update `PROJECT_MEMORY.md` active_plan field
 
 ## Constraints
